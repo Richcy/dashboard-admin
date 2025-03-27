@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'AdminLTE',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -322,11 +322,22 @@ return [
         ],
         [
             'text' => 'pages',
-            'url' => 'admin/pages',
+            'url' => 'pages',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
             'label_color' => 'success',
         ],
+        [
+            'text' => 'table',
+            'url' => 'tables',
+            'icon' => 'far fa-fw fa-file',
+        ],
+        [
+            'text' => 'Pegawai',
+            'url' => 'pegawai',
+            'icon' => 'far fa-fw fa-user',
+        ],
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
