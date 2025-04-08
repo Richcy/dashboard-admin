@@ -315,12 +315,13 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+        ['header' => 'DATABASE'],
         [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
+        /*[
             'text' => 'pages',
             'url' => 'pages',
             'icon' => 'far fa-fw fa-file',
@@ -331,7 +332,7 @@ return [
             'text' => 'table',
             'url' => 'tables',
             'icon' => 'far fa-fw fa-file',
-        ],
+        ],*/
         [
             'text' => 'Pegawai',
             'url' => 'pegawai',
@@ -349,7 +350,7 @@ return [
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        [
+        /*[
             'text' => 'multilevel',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
@@ -402,7 +403,7 @@ return [
             'text' => 'information',
             'icon_color' => 'cyan',
             'url' => '#',
-        ],
+        ],*/
     ],
 
     /*

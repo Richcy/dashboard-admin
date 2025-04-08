@@ -7,17 +7,20 @@
 
 @section('content')
 <div class="container">
-    <div class="text-start">
+    <!-- <div class="text-start">
         <h2>All Data</h2>
-    </div>
+    </div> -->
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-12 mt-4">
             <div class="card mb-4">
                 <div class="card-header">
                     <h3 class="card-title">Tabel Pegawai</h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Data</a>
+                    </div>
                     <table id="pegawai-table" class="table table-bordered">
                         <thead>
                             <tr>

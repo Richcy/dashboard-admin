@@ -18,6 +18,8 @@ class Pegawai extends Model
         'nip_npp',
         'tmt_kerja',
         'nik',
+        'tanggal_lahir',
+        'tempat_lahir',
         'status_asn',
         'tmt_asn',
         'status_perkawinan',
@@ -40,5 +42,6 @@ class Pegawai extends Model
         'tmt_kerja' => 'date',
         'tmt_asn' => 'date',
         'tanggungan' => 'integer',
+        'tanggal_lahir' => 'date'
     ];
 }

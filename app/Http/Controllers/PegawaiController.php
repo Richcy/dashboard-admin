@@ -19,18 +19,21 @@ class PegawaiController extends Controller
 
     public function getPegawai(Request $request)
     {
-        $data = Pegawai::select(['id', 'nama_dengan_gelar', 'nip_npp', 'status_asn', 'email']);
+        $pegawai = Pegawai::select(['id', 'nama_dengan_gelar', 'nip_npp', 'status_asn', 'email']);
 
-        return DataTables::of($data)
+        return DataTables::of($pegawai)
             ->addColumn('action', function ($row) {
-                return '<a href="' . route('pegawai.show', $row->id) . '" class="btn btn-sm btn-primary">View</a> 
-                    <a href="' . route('pegawai.edit', $row->id) . '" class="btn btn-sm btn-warning">Edit</a> 
-                    <form action="' . route('pegawai.destroy', $row->id) . '" method="POST" style="display:inline;">
-                        ' . csrf_field() . method_field("DELETE") . '
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
-                    </form>';
+                $editUrl = route('pegawai.edit', $row->id);
+                $deleteUrl = route('pegawai.destroy', $row->id);
+                return '
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+                        ' . csrf_field() . method_field('DELETE') . '
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
+                    </form>
+                ';
             })
-            ->rawColumns(['action']) // Important: Allow raw HTML
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -55,6 +58,8 @@ class PegawaiController extends Controller
             'nip_npp' => 'required|unique:pegawais',
             'tmt_kerja' => 'required|date',
             'nik' => 'required|unique:pegawais',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
             'status_asn' => 'nullable|string',
             'tmt_asn' => 'nullable|date',
             'status_perkawinan' => 'nullable|string',
@@ -108,7 +113,9 @@ class PegawaiController extends Controller
             'nama_tanpa_gelar' => 'required|string',
             'nip_npp' => 'required|unique:pegawais,nip_npp,' . $id,
             'tmt_kerja' => 'required|date',
-            'nik' => 'required|unique:pegawais,nik' . $id,
+            'nik' => 'required|unique:pegawais,nik,' . $id,
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
             'status_asn' => 'nullable|string',
             'tmt_asn' => 'nullable|date',
             'status_perkawinan' => 'nullable|string',
