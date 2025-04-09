@@ -14,29 +14,29 @@
         <div class="col-md-12 mt-4">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Tabel Pegawai</h3>
+                    <h3 class="card-title">Tabel Pendidikan Pegawai</h3>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row mb-3">
-                        <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Data</a>
+                        <a href="{{ route('pendidikan-pegawai.create') }}" class="btn btn-primary">Tambah Data</a>
                     </div>
                     <div class="table-responsive">
-                        <table id="pegawai-table" class="table table-bordered">
+                        <table id="pendidikan-table" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nama</th>
-                                    <th>NIP</th>
-                                    <th>Status ASN</th>
-                                    <th>Email</th>
+                                    <th>Nama Pegawai</th>
+                                    <th>Tingkat Pendidikan</th>
+                                    <th>Nama Sekolah</th>
+                                    <th>Jurusan</th>
+                                    <th>Nomor Ijazah</th>
+                                    <th>Tahun Lulus</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
         </div>
     </div>
@@ -49,29 +49,37 @@
 
 <script>
     $(document).ready(function() {
-        $('#pegawai-table').DataTable({
+        $('#pendidikan-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ url('/pegawai/data') }}",
+            ajax: "{{ route('pendidikan-pegawai.data') }}", // Adjust this route to match your controller
             columns: [{
                     data: 'id',
                     name: 'id'
                 },
                 {
-                    data: 'nama_dengan_gelar',
-                    name: 'nama_dengan_gelar'
+                    data: 'pegawai.nama_dengan_gelar',
+                    name: 'pegawai.nama_dengan_gelar'
                 },
                 {
-                    data: 'nip_npp',
-                    name: 'nip_npp'
+                    data: 'pendidikan',
+                    name: 'pendidikan'
                 },
                 {
-                    data: 'status_asn',
-                    name: 'status_asn'
+                    data: 'nama_sekolah',
+                    name: 'nama_sekolah'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'jurusan',
+                    name: 'jurusan'
+                },
+                {
+                    data: 'nomor_ijazah',
+                    name: 'nomor_ijazah'
+                },
+                {
+                    data: 'tahun_lulus',
+                    name: 'tahun_lulus'
                 },
                 {
                     data: 'action',

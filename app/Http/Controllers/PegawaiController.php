@@ -23,15 +23,17 @@ class PegawaiController extends Controller
 
         return DataTables::of($pegawai)
             ->addColumn('action', function ($row) {
+                $showUrl = route('pegawai.show', $row->id);
                 $editUrl = route('pegawai.edit', $row->id);
                 $deleteUrl = route('pegawai.destroy', $row->id);
                 return '
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-                        ' . csrf_field() . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
-                    </form>
-                ';
+            <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
+            <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
+            <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+                ' . csrf_field() . method_field('DELETE') . '
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
+            </form>
+        ';
             })
             ->rawColumns(['action'])
             ->make(true);

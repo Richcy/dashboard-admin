@@ -44,4 +44,9 @@ class Pegawai extends Model
         'tanggungan' => 'integer',
         'tanggal_lahir' => 'date'
     ];
+
+    public function pendidikan()
+    {
+        return $this->hasMany(PendidikanPegawai::class);
+    }
 }

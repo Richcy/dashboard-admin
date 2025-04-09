@@ -81,11 +81,12 @@
                         <!-- Status ASN & TMT ASN -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="status_asn" class="form-label">Status ASN</label>
+                                <label for="status_asn" class="form-label">Status Pegawai</label>
                                 <select class="form-control @error('status_asn') is-invalid @enderror" id="status_asn" name="status_asn">
                                     <option value="">-- Pilih Status --</option>
-                                    <option value="ASN" {{ old('status_asn', $pegawai->status_asn) == 'ASN' ? 'selected' : '' }}>ASN</option>
-                                    <option value="Non ASN" {{ old('status_asn', $pegawai->status_asn) == 'Non ASN' ? 'selected' : '' }}>Non ASN</option>
+                                    <option value="PNS" {{ old('status_asn', $pegawai->status_asn) == 'PNS' ? 'selected' : '' }}>PNS</option>
+                                    <option value="PPPK" {{ old('status_asn', $pegawai->status_asn) == 'PPPK' ? 'selected' : '' }}>PPPK</option>
+                                    <option value="Kontrak BLUD" {{ old('status_asn', $pegawai->status_asn) == 'Kontrak BLUD' ? 'selected' : '' }}>Kontrak BLUD</option>
                                 </select>
                                 @error('status_asn') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>

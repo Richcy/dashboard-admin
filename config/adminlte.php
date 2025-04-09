@@ -336,8 +336,19 @@ return [
         [
             'text' => 'Pegawai',
             'url' => 'pegawai',
-            'icon' => 'far fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => 'Pendidikan Pegawai',
+            'url' => 'pendidikan-pegawai',
+            'icon' => 'fas fa-fw fa-graduation-cap',
+        ],
+        [
+            'text' => 'Jabatan Pegawai',
+            'url' => 'jabatan-pegawai',
+            'icon' => 'fas fa-fw fa fa-building',
+        ],
+
 
         ['header' => 'account_settings'],
         [

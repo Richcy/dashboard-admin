@@ -7,36 +7,35 @@
 
 @section('content')
 <div class="container">
-    <!-- <div class="text-start">
-        <h2>All Data</h2>
-    </div> -->
     <div class="row justify-content-center">
         <div class="col-md-12 mt-4">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Tabel Pegawai</h3>
+                    <h3 class="card-title">Tabel Jabatan Pegawai</h3>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row mb-3">
-                        <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Data</a>
+                        <a href="{{ route('jabatan-pegawai.create') }}" class="btn btn-primary">Tambah Data</a>
                     </div>
                     <div class="table-responsive">
-                        <table id="pegawai-table" class="table table-bordered">
+                        <table id="jabatan-table" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nama</th>
-                                    <th>NIP</th>
-                                    <th>Status ASN</th>
-                                    <th>Email</th>
+                                    <th>Nama Pegawai</th>
+                                    <th>Bidang</th>
+                                    <th>Ruangan</th>
+                                    <th>Jabatan</th>
+                                    <th>Jenjang Jabatan</th>
+                                    <th>Golongan Pangkat</th>
+                                    <th>TMT Jabatan</th>
+                                    <th>Status Jabatan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
         </div>
     </div>
@@ -49,29 +48,45 @@
 
 <script>
     $(document).ready(function() {
-        $('#pegawai-table').DataTable({
+        $('#jabatan-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ url('/pegawai/data') }}",
+            ajax: "{{ route('jabatan-pegawai.data') }}", // Make sure this route exists in your web.php
             columns: [{
                     data: 'id',
                     name: 'id'
                 },
                 {
-                    data: 'nama_dengan_gelar',
-                    name: 'nama_dengan_gelar'
+                    data: 'pegawai.nama_dengan_gelar',
+                    name: 'pegawai.nama_dengan_gelar'
                 },
                 {
-                    data: 'nip_npp',
-                    name: 'nip_npp'
+                    data: 'bidang',
+                    name: 'bidang'
                 },
                 {
-                    data: 'status_asn',
-                    name: 'status_asn'
+                    data: 'ruangan',
+                    name: 'ruangan'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'jabatan',
+                    name: 'jabatan'
+                },
+                {
+                    data: 'jenjang_jabatan',
+                    name: 'jenjang_jabatan'
+                },
+                {
+                    data: 'golongan_pangkat',
+                    name: 'golongan_pangkat'
+                },
+                {
+                    data: 'tmt_jabatan',
+                    name: 'tmt_jabatan'
+                },
+                {
+                    data: 'status_jabatan',
+                    name: 'status_jabatan'
                 },
                 {
                     data: 'action',
