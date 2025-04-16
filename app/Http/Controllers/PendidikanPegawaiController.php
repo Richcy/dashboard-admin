@@ -22,19 +22,20 @@ class PendidikanPegawaiController extends Controller
             ->addColumn('pegawai_nama', function ($row) {
                 return $row->pegawai->nama_dengan_gelar ?? '-';
             })
-            ->addColumn('action', function ($row) {
-                $showUrl = route('pendidikan-pegawai.show', $row->id);
-                $editUrl = route('pendidikan-pegawai.edit', $row->id);
-                $deleteUrl = route('pendidikan-pegawai.destroy', $row->id);
-                return '
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-                        ' . csrf_field() . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
-                    </form>
-                ';
-            })
+            ->addIndexColumn()
+            // ->addColumn('action', function ($row) {
+            //     $showUrl = route('pendidikan-pegawai.show', $row->id);
+            //     $editUrl = route('pendidikan-pegawai.edit', $row->id);
+            //     $deleteUrl = route('pendidikan-pegawai.destroy', $row->id);
+            //     return '
+            //         <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
+            //         <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
+            //         <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+            //             ' . csrf_field() . method_field('DELETE') . '
+            //             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
+            //         </form>
+            //     ';
+            // })
             ->rawColumns(['action'])
             ->make(true);
     }

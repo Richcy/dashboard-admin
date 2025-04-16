@@ -24,17 +24,16 @@ class PegawaiController extends Controller
         return DataTables::of($pegawai)
             ->addColumn('action', function ($row) {
                 $showUrl = route('pegawai.show', $row->id);
-                $editUrl = route('pegawai.edit', $row->id);
                 $deleteUrl = route('pegawai.destroy', $row->id);
                 return '
             <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
-            <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
             <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
                 ' . csrf_field() . method_field('DELETE') . '
                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
             </form>
         ';
             })
+            ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -90,7 +89,7 @@ class PegawaiController extends Controller
     public function show(string $id)
     {
         //
-        $pegawai = Pegawai::findOrFail($id);
+        $pegawai = Pegawai::with(['pendidikan', 'jabatan'])->findOrFail($id);
         return view('pegawai.show', compact('pegawai'));
     }
 

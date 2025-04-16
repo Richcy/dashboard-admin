@@ -25,7 +25,7 @@
                         <table id="pegawai-table" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>NIP</th>
                                     <th>Status ASN</th>
@@ -54,8 +54,10 @@
             serverSide: true,
             ajax: "{{ url('/pegawai/data') }}",
             columns: [{
-                    data: 'id',
-                    name: 'id'
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'nama_dengan_gelar',

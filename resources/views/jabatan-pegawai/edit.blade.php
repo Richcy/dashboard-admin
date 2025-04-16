@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="{{ route('jabatan-pegawai.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ url('pegawai/' . $jabatan->pegawai_id) }}" class="btn btn-secondary">Back</a>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>

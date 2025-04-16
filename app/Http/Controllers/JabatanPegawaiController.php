@@ -25,19 +25,20 @@ class JabatanPegawaiController extends Controller
             ->editColumn('tmt_jabatan', function ($row) {
                 return $row->tmt_jabatan ? \Carbon\Carbon::parse($row->tmt_jabatan)->translatedFormat('j F Y') : '-';
             })
-            ->addColumn('action', function ($row) {
-                $showUrl = route('jabatan-pegawai.show', $row->id);
-                $editUrl = route('jabatan-pegawai.edit', $row->id);
-                $deleteUrl = route('jabatan-pegawai.destroy', $row->id);
-                return '
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-                        ' . csrf_field() . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
-                    </form>
-                ';
-            })
+            ->addIndexColumn()
+            // ->addColumn('action', function ($row) {
+            //     $showUrl = route('jabatan-pegawai.show', $row->id);
+            //     $editUrl = route('jabatan-pegawai.edit', $row->id);
+            //     $deleteUrl = route('jabatan-pegawai.destroy', $row->id);
+            //     return '
+            //         <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
+            //         <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
+            //         <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+            //             ' . csrf_field() . method_field('DELETE') . '
+            //             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
+            //         </form>
+            //     ';
+            // })
             ->rawColumns(['action'])
             ->make(true);
     }

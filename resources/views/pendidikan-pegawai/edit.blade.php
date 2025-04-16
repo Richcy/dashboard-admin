@@ -9,7 +9,7 @@
         <div class="col-md-8 mt-4">
             <div class="card">
                 <div class="card-header bg-warning text-white">
-                    <h3 class="card-title">Edit Data Pegawai</h3>
+                    <h3 class="card-title">Edit Data Pendidikan Pegawai</h3>
                     <div class="card-tools">
                         <!-- Buttons, labels, and many other things can be placed here! -->
                         <!-- Here is a label for example -->
@@ -26,7 +26,7 @@
                         <!-- Pegawai -->
                         <div class="mb-3">
                             <label for="pegawai_id" class="form-label">Pegawai</label>
-                            <select class="form-control @error('pegawai_id') is-invalid @enderror" id="pegawai_id" name="pegawai_id">
+                            <select class="form-control @error('pegawai_id') is-invalid @enderror" id="pegawai_id" name="pegawai_id" disabled>
                                 <option value="">-- Pilih Pegawai --</option>
                                 @foreach($pegawais as $p)
                                 <option value="{{ $p->id }}" {{ old('pegawai_id', $pendidikan->pegawai_id) == $p->id ? 'selected' : '' }}>{{ $p->nama_dengan_gelar }}</option>
@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="{{ route('pendidikan-pegawai.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ url('pegawai/' . $pendidikan->pegawai_id) }}" class="btn btn-secondary">Back</a>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>

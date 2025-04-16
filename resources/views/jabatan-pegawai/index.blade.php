@@ -21,7 +21,7 @@
                         <table id="jabatan-table" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Nama Pegawai</th>
                                     <th>Bidang</th>
                                     <th>Ruangan</th>
@@ -30,7 +30,7 @@
                                     <th>Golongan Pangkat</th>
                                     <th>TMT Jabatan</th>
                                     <th>Status Jabatan</th>
-                                    <th>Aksi</th>
+                                    <!-- <th>Aksi</th> -->
                                 </tr>
                             </thead>
                         </table>
@@ -53,8 +53,10 @@
             serverSide: true,
             ajax: "{{ route('jabatan-pegawai.data') }}", // Make sure this route exists in your web.php
             columns: [{
-                    data: 'id',
-                    name: 'id'
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'pegawai.nama_dengan_gelar',
@@ -88,12 +90,12 @@
                     data: 'status_jabatan',
                     name: 'status_jabatan'
                 },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ]
         });
     });

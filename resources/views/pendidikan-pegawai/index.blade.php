@@ -24,14 +24,14 @@
                         <table id="pendidikan-table" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Nama Pegawai</th>
                                     <th>Tingkat Pendidikan</th>
                                     <th>Nama Sekolah</th>
                                     <th>Jurusan</th>
                                     <th>Nomor Ijazah</th>
                                     <th>Tahun Lulus</th>
-                                    <th>Aksi</th>
+                                    <!-- <th>Aksi</th> -->
                                 </tr>
                             </thead>
                         </table>
@@ -54,8 +54,10 @@
             serverSide: true,
             ajax: "{{ route('pendidikan-pegawai.data') }}", // Adjust this route to match your controller
             columns: [{
-                    data: 'id',
-                    name: 'id'
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: 'pegawai.nama_dengan_gelar',
@@ -81,12 +83,12 @@
                     data: 'tahun_lulus',
                     name: 'tahun_lulus'
                 },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                }
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // }
             ]
         });
     });

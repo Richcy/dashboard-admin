@@ -315,7 +315,7 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        ['header' => 'DATABASE'],
+        ['header' => 'DATA MANAGEMENT'],
         [
             'text' => 'blog',
             'url' => 'admin/blog',
@@ -338,6 +338,7 @@ return [
             'url' => 'pegawai',
             'icon' => 'fas fa-fw fa-user',
         ],
+        ['header' => 'DATABASE'],
         [
             'text' => 'Pendidikan Pegawai',
             'url' => 'pendidikan-pegawai',
