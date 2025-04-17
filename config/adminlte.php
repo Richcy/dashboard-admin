@@ -334,9 +334,14 @@ return [
             'icon' => 'far fa-fw fa-file',
         ],*/
         [
-            'text' => 'Pegawai',
-            'url' => 'pegawai',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Pegawai Aktif',
+            'url' => 'pegawai-aktif',
+            'icon' => 'fas fa-users',
+        ],
+        [
+            'text' => 'Pegawai Non Aktif',
+            'url' => 'pegawai-nonaktif',
+            'icon' => 'fas fa-users-slash',
         ],
         ['header' => 'DATABASE'],
         [

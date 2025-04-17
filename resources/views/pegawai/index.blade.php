@@ -29,7 +29,8 @@
                                     <th>Nama</th>
                                     <th>NIP</th>
                                     <th>Status ASN</th>
-                                    <th>Email</th>
+                                    <th>Nomor HP</th>
+                                    <th>Status Pegawai</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -52,7 +53,7 @@
         $('#pegawai-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ url('/pegawai/data') }}",
+            ajax: '{{ route("pegawai.data", $status) }}',
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -72,8 +73,12 @@
                     name: 'status_asn'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'nomor_telepon',
+                    name: 'nomor_telepon'
+                },
+                {
+                    data: 'status_pegawai',
+                    name: 'status_pegawai'
                 },
                 {
                     data: 'action',

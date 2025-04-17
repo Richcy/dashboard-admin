@@ -114,6 +114,10 @@
                                         <th>Email</th>
                                         <td>{{ $pegawai->email }}</td>
                                     </tr>
+                                    <tr>
+                                        <th>Status Pegawai</th>
+                                        <td>{{ $pegawai->status_pegawai }}</td>
+                                    </tr>
                                 </table>
                                 <a href="{{ route('pegawai.edit', $pegawai->id) }}" class="btn btn-warning">Edit Pegawai</a>
                             </div>

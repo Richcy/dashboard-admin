@@ -208,6 +208,19 @@
                                 @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="status_pegawai" class="form-label">Status Pegawai</label>
+                            <select class="form-control @error('status_pegawai') is-invalid @enderror" id="status_pegawai" name="status_pegawai">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="Aktif" {{ old('status_pegawai', $pegawai->status_pegawai) == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="Resign" {{ old('status_pegawai', $pegawai->status_pegawai) == 'resign' ? 'selected' : '' }}>Resign</option>
+                            </select>
+                            @error('status_pegawai')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                     </div>
 
                     <div class="card-footer">
