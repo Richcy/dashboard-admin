@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Pegawai;
 use Yajra\DataTables\Facades\DataTables;
+use App\Exports\PegawaiExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PegawaiImport;
 
 class PegawaiController extends Controller
 {
@@ -240,5 +243,21 @@ class PegawaiController extends Controller
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function export()
+    {
+        return Excel::download(new PegawaiExport, 'data-pegawai.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv,xls'
+        ]);
+
+        Excel::import(new PegawaiImport, $request->file('file'));
+
+        return back()->with('success', 'Import data pegawai berhasil!');
     }
 }

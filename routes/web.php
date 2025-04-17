@@ -21,6 +21,9 @@ Route::get('/jabatan-pegawai/data', [JabatanPegawaiController::class, 'getData']
 Route::get('/pegawai-aktif', [PegawaiController::class, 'aktif'])->name('pegawai.aktif');
 Route::get('/pegawai-nonaktif', [PegawaiController::class, 'nonaktif'])->name('pegawai.nonaktif');
 Route::get('/pegawai-data/{status}', [PegawaiController::class, 'getData'])->name('pegawai.data');
+Route::get('/export-pegawai', [PegawaiController::class, 'export'])->name('pegawai.export');
+Route::post('/pegawai/import', [PegawaiController::class, 'import'])->name('pegawai.import');
+
 Route::resource('pegawai', PegawaiController::class);
 Route::resource('pendidikan-pegawai', PendidikanPegawaiController::class);
 Route::resource('jabatan-pegawai', JabatanPegawaiController::class);

@@ -20,7 +20,16 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Data</a>
+                        <a href="{{ route('pegawai.export') }}" class="btn btn-success ml-2">📥 Download Excel</a>
                     </div>
+                    <form action="{{ route('pegawai.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="file">Import Pegawai (Excel)</label>
+                            <input type="file" name="file" class="form-control" required>
+                        </div>
+                        <button class="btn btn-success">Import</button>
+                    </form>
                     <div class="table-responsive">
                         <table id="pegawai-table" class="table table-bordered">
                             <thead>
