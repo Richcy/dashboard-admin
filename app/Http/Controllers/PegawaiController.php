@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Pegawai;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -43,8 +44,16 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
-        return view('pegawai.create');
+        $previousUrl = url()->previous();
+        $backUrl = route('pegawai.aktif'); // Default fallback
+
+        if (Str::contains($previousUrl, 'pegawai-nonaktif')) {
+            $backUrl = route('pegawai.nonaktif');
+        } elseif (Str::contains($previousUrl, 'pegawai-aktif')) {
+            $backUrl = route('pegawai.aktif');
+        }
+
+        return view('pegawai.create', compact('backUrl'));
     }
 
     /**
@@ -93,7 +102,9 @@ class PegawaiController extends Controller
 
         Pegawai::create($data);
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan');
+        return redirect()->route(
+            $request->status_pegawai === 'aktif' ? 'pegawai.aktif' : 'pegawai.nonaktif'
+        )->with('success', 'Data pegawai berhasil ditambahkan.');
     }
 
     /**
@@ -102,8 +113,16 @@ class PegawaiController extends Controller
     public function show(string $id)
     {
         //
+        $previousUrl = url()->previous();
+        $backUrl = route('pegawai.aktif'); // Default fallback
+
+        if (Str::contains($previousUrl, 'pegawai-nonaktif')) {
+            $backUrl = route('pegawai.nonaktif');
+        } elseif (Str::contains($previousUrl, 'pegawai-aktif')) {
+            $backUrl = route('pegawai.aktif');
+        }
         $pegawai = Pegawai::with(['pendidikan', 'jabatan'])->findOrFail($id);
-        return view('pegawai.show', compact('pegawai'));
+        return view('pegawai.show', compact('pegawai', 'backUrl'));
     }
 
     /**
@@ -122,6 +141,8 @@ class PegawaiController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $pegawai = Pegawai::findOrFail($id);
+
         $request->validate([
             'nama_dengan_gelar' => 'required|string',
             'nama_tanpa_gelar' => 'required|string',
@@ -138,7 +159,7 @@ class PegawaiController extends Controller
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
             'tanggungan' => 'nullable|string',
 
-            'status_pegawai' => 'required|in:Aktif,Resign',
+            'status_pegawai' => 'required|in:aktif,resign',
 
             'alamat' => 'nullable|string',
             'rt' => 'nullable|string',
@@ -155,10 +176,27 @@ class PegawaiController extends Controller
             'email' => 'nullable|email',
         ]);
 
-        $pegawai = Pegawai::findOrFail($id);
+        $oldStatus = $pegawai->status_pegawai; // get current status before update
+
         $pegawai->update($request->all());
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
+        $newStatus = $request->status_pegawai;
+
+        // Check if status_pegawai changed and redirect accordingly
+        if ($oldStatus !== $newStatus) {
+            if ($newStatus === 'aktif') {
+                return redirect()->route('pegawai.aktif')->with('success', 'Status pegawai diubah menjadi Aktif.');
+            } elseif ($newStatus === 'resign') {
+                return redirect()->route('pegawai.nonaktif')->with('success', 'Status pegawai diubah menjadi Resign.');
+            }
+        }
+
+        // If status didn't change, redirect based on current status
+        if ($newStatus === 'aktif') {
+            return redirect()->route('pegawai.aktif')->with('success', 'Data pegawai berhasil diperbarui.');
+        } else {
+            return redirect()->route('pegawai.nonaktif')->with('success', 'Data pegawai berhasil diperbarui.');
+        }
     }
 
     /**
@@ -195,7 +233,8 @@ class PegawaiController extends Controller
         <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
         <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
             ' . csrf_field() . method_field('DELETE') . '
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Semua data pegawai ini akan terhapus.\nHapus data?\')">Hapus</button>
+
         </form>';
             })
             ->addIndexColumn()

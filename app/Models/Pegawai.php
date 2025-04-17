@@ -36,6 +36,7 @@ class Pegawai extends Model
         'npwp',
         'nomor_telepon',
         'email',
+        'status_pegawai',
     ];
 
     protected $casts = [

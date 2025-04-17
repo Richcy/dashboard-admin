@@ -1,6 +1,6 @@
     @extends('layouts.app')
 
-    @section('content')
+    @section('content_body')
     <div class="container">
         <div class="text-start mb-3">
             <h2>Detail Pegawai</h2>

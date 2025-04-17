@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content_body')
 <div class="container">
     <div class="text-start">
         <h2>Input Data</h2>

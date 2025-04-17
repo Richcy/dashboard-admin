@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content_body')
 <div class="container">
     <!-- <div class="text-start">
         <h2>Input Data</h2>
@@ -255,8 +255,8 @@
                             <label for="status_pegawai" class="form-label">Status Pegawai</label>
                             <select class="form-control @error('status_pegawai') is-invalid @enderror" id="status_pegawai" name="status_pegawai">
                                 <option value="">-- Pilih Status --</option>
-                                <option value="Aktif" {{ old('status_pegawai') == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                <option value="Resign" {{ old('status_pegawai') == 'resign' ? 'selected' : '' }}>Resign</option>
+                                <option value="aktif" {{ old('status_pegawai') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="resign" {{ old('status_pegawai') == 'resign' ? 'selected' : '' }}>Resign</option>
                             </select>
                             @error('status_pegawai')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -266,7 +266,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="{{ route('pegawai.index') }}" class="btn btn-secondary mr-2">Back</a>
+                        <a href="{{ $backUrl }}" class="btn btn-secondary mr-2">Back</a>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>

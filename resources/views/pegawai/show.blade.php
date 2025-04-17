@@ -1,10 +1,10 @@
     @extends('layouts.app')
 
-    @section('content')
+    @section('content_body')
     <div class="container">
         <div class="text-start mb-3">
             <h2>Detail Pegawai</h2>
-            <a href="{{ route('pegawai.index') }}" class="btn btn-secondary">← Kembali</a>
+            <a href="{{ $backUrl }}" class="btn btn-secondary">← Kembali</a>
         </div>
 
         <div class="row justify-content-center">
