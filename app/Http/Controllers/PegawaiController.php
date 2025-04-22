@@ -68,6 +68,7 @@ class PegawaiController extends Controller
         $request->validate([
             'nama_dengan_gelar' => 'required|string',
             'nama_tanpa_gelar' => 'required|string',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'nip_npp' => 'required|unique:pegawais',
             'tmt_kerja' => 'required|date',
             'nik' => 'required|unique:pegawais',
@@ -149,6 +150,7 @@ class PegawaiController extends Controller
         $request->validate([
             'nama_dengan_gelar' => 'required|string',
             'nama_tanpa_gelar' => 'required|string',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'nip_npp' => 'required|unique:pegawais,nip_npp,' . $pegawai->id,
             'tmt_kerja' => 'required|date',
             'nik' => 'required|unique:pegawais,nik,' . $pegawai->id,
@@ -252,12 +254,23 @@ class PegawaiController extends Controller
 
     public function import(Request $request)
     {
+        // Validate file input
         $request->validate([
             'file' => 'required|mimes:xlsx,csv,xls'
         ]);
 
-        Excel::import(new PegawaiImport, $request->file('file'));
+        try {
+            // Import the file
+            Excel::import(new PegawaiImport, $request->file('file'));
 
-        return back()->with('success', 'Import data pegawai berhasil!');
+            // If import is successful, return a success message
+            return back()->with('success', 'Import data pegawai berhasil!');
+        } catch (\Maatwebsite\Excel\ExcelException $e) {
+            // If an error occurs during import, log the error and return a failure message
+            Log::error('Import Error: ' . $e->getMessage());
+
+            // You can also check if there's specific information on the exception and return that
+            return back()->with('error', 'Terjadi kesalahan saat mengimpor data pegawai. Silakan coba lagi.');
+        }
     }
 }

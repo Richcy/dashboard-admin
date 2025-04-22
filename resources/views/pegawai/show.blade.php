@@ -39,6 +39,10 @@
                                         <td>{{ $pegawai->nama_tanpa_gelar }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Jenis Kelamin</th>
+                                        <td>{{ $pegawai->jenis_kelamin }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>NIK</th>
                                         <td>{{ $pegawai->nik }}</td>
                                     </tr>
