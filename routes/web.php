@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PendidikanPegawaiController;
 use App\Http\Controllers\JabatanPegawaiController;
+use App\Http\Controllers\DashboardController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -17,6 +18,8 @@ Route::middleware(['login.warning'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/pages', [HomeController::class, 'page'])->name('page');
     Route::get('/tables', [HomeController::class, 'table'])->name('table');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
     Route::get('/pendidikan-pegawai/data', [PendidikanPegawaiController::class, 'getData'])->name('pendidikan-pegawai.data');
     Route::get('/jabatan-pegawai/data', [JabatanPegawaiController::class, 'getData'])->name('jabatan-pegawai.data');

@@ -315,12 +315,18 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-        ['header' => 'DATA MANAGEMENT'],
+        ['header' => 'GENERAL'],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            'text' => 'Dashboard',
+            'url' => 'dashboard',
+            'icon' => 'fas fa-tachometer-alt',
         ],
+        ['header' => 'DATA MANAGEMENT'],
+        // [
+        //     'text' => 'blog',
+        //     'url' => 'admin/blog',
+        //     'can' => 'manage-blog',
+        // ],
         /*[
             'text' => 'pages',
             'url' => 'pages',
