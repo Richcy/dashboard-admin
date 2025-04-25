@@ -57,6 +57,17 @@ class DashboardController extends Controller
             'backgroundColor' => ['#4e73df', '#e74a3b'],
         ];
 
+        $chartData3 = [
+            'labels' => ['PNS', 'PPPK', 'Kontrak BLUD', 'Total Pegawai Aktif'],
+            'data' => [
+                $pnsAktifCount,
+                $pppkAktifCount,
+                $kontrakAktifCount,
+                $aktifCount
+            ],
+            'backgroundColor' => ['#4e73df', '#1fde52', '#e74a3b', '#d1de1f'],
+        ];
+
         $jabatanChartLabels = $jabatanUtamaCounts->pluck('jabatan');
         $jabatanChartData = $jabatanUtamaCounts->pluck('total');
 
@@ -64,8 +75,9 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'pegawaiCount',
             'jabatanPegawaiCount',
-            'chartData2',
             'chartData',
+            'chartData2',
+            'chartData3',
             'aktifCount',
             'nonAktifCount',
             'utamaCount',

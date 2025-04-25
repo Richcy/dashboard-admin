@@ -8,24 +8,31 @@ const ctx = document.getElementById('pegawaiChart').getContext('2d');
 const pegawaiChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: chartLabels,
-        datasets: [{
-            label: 'Status Pegawai',
-            data: chartData,
-            backgroundColor: chartBackgroundColor,
+        labels: [''], // use empty string so bars don’t group by label
+        datasets: chartLabels.map((label, index) => ({
+            label: label,
+            data: [chartData[index]],
+            backgroundColor: chartBackgroundColor[index],
             borderWidth: 1
-        }]
+        }))
     },
     options: {
         responsive: true,
-        //aspectRatio: 2,
         maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom' // moves legend below the chart
+            }
+        },
         scales: {
             y: {
                 beginAtZero: true,
                 ticks: {
                     precision: 0
                 }
+            },
+            x: {
+                display: false // hide x-axis since we’re using one category
             }
         }
     }

@@ -78,7 +78,7 @@
         <div class="col-md-6 mt-3">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h5 class="card-title">Visualisasi Data Pegawai</h5>
+                    <h5 class="card-title">Visualisasi Data Pegawai Aktif</h5>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
@@ -89,9 +89,9 @@
                     </div>
                 </div>
                 <div class="card-body" id="chartWrapper" style="height: 40vh;"
-                    data-labels='@json($chartData["labels"])'
-                    data-values='@json($chartData["data"])'
-                    data-background-color='@json($chartData["backgroundColor"])'>
+                    data-labels='@json($chartData3["labels"])'
+                    data-values='@json($chartData3["data"])'
+                    data-background-color='@json($chartData3["backgroundColor"])'>
                     <canvas id="pegawaiChart"></canvas>
                 </div>
 
