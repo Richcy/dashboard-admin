@@ -41,7 +41,7 @@ class PegawaiFactory extends Factory
             'npwp' => $this->faker->numerify('###############'),
             'nomor_telepon' => $this->faker->unique()->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
-            'status_pegawai' => $this->faker->randomElement(['aktif', 'resign']),
+            'status_pegawai' => $this->faker->randomElement(['aktif', 'nonaktif']),
         ];
     }
 }

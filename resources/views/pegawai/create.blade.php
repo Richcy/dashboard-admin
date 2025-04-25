@@ -269,7 +269,7 @@
                             <select class="form-control @error('status_pegawai') is-invalid @enderror" id="status_pegawai" name="status_pegawai">
                                 <option value="">-- Pilih Status --</option>
                                 <option value="aktif" {{ old('status_pegawai') == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                <option value="resign" {{ old('status_pegawai') == 'resign' ? 'selected' : '' }}>Resign</option>
+                                <option value="nonaktif" {{ old('status_pegawai') == 'nonaktif' ? 'selected' : '' }}>Non Aktif</option>
                             </select>
                             @error('status_pegawai')
                             <div class="invalid-feedback">{{ $message }}</div>

@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-4 mt-3">
-            <x-adminlte-info-box title="Pegawai Resign" text="{{ $nonAktifCount }}" icon="fas fa-user-slash" theme="warning" />
+            <x-adminlte-info-box title="Pegawai Non Aktif" text="{{ $nonAktifCount }}" icon="fas fa-user-slash" theme="warning" />
         </div>
     </div>
 
@@ -58,19 +58,19 @@
     <div class="row">
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="Total Pegawai Resign" text="{{ $nonAktifCount }}" icon="fas fa-users-slash" theme="primary" />
+            <x-adminlte-info-box title="Total Pegawai Non Aktif" text="{{ $nonAktifCount }}" icon="fas fa-users-slash" theme="primary" />
         </div>
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="PNS (Resign)" text="{{ $pnsResignCount }}" icon="fas fa-user-tie" theme="success" />
+            <x-adminlte-info-box title="PNS (Non Aktif)" text="{{ $pnsNonAktifCount }}" icon="fas fa-user-tie" theme="success" />
         </div>
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="PPPK (Resign)" text="{{ $pppkResignCount }}" icon="fas fa-user-tag" theme="warning" />
+            <x-adminlte-info-box title="PPPK (Non Aktif)" text="{{ $pppkNonAktifCount }}" icon="fas fa-user-tag" theme="warning" />
         </div>
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="Kontrak BLUD (Resign)" text="{{ $kontrakResignCount }}" icon="fas fa-user-clock" theme="info" />
+            <x-adminlte-info-box title="Kontrak BLUD (Non Aktif)" text="{{ $kontrakNonAktifCount }}" icon="fas fa-user-clock" theme="info" />
         </div>
     </div>
 

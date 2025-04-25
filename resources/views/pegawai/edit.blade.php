@@ -228,7 +228,7 @@
                             <select class="form-control @error('status_pegawai') is-invalid @enderror" id="status_pegawai" name="status_pegawai">
                                 <option value="">-- Pilih Status --</option>
                                 <option value="aktif" {{ old('status_pegawai', $pegawai->status_pegawai) == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                <option value="resign" {{ old('status_pegawai', $pegawai->status_pegawai) == 'resign' ? 'selected' : '' }}>Resign</option>
+                                <option value="nonaktif" {{ old('status_pegawai', $pegawai->status_pegawai) == 'nonaktif' ? 'selected' : '' }}>Non Aktif</option>
                             </select>
                             @error('status_pegawai')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -238,7 +238,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="{{ $pegawai->status_pegawai === 'resign' ? route('pegawai.nonaktif') : route('pegawai.aktif') }}" class="btn btn-secondary mr-2">Back</a>
+                        <a href="{{ $pegawai->status_pegawai === 'nonaktif' ? route('pegawai.nonaktif') : route('pegawai.aktif') }}" class="btn btn-secondary mr-2">Back</a>
                         <button type="submit" class="btn btn-warning">Update</button>
                     </div>
                 </form>

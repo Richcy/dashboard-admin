@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $pegawaiCount = Pegawai::count();
 
         $aktifCount = Pegawai::where('status_pegawai', 'aktif')->count();
-        $nonAktifCount = Pegawai::where('status_pegawai', 'resign')->count();
+        $nonAktifCount = Pegawai::where('status_pegawai', 'nonaktif')->count();
         $pnsCount = Pegawai::where('status_asn', 'PNS')->count();
         $pppkCount = Pegawai::where('status_asn', 'PPPK')->count();
         $kontrakCount = Pegawai::where('status_asn', 'Kontrak BLUD')->count();
@@ -24,10 +24,10 @@ class DashboardController extends Controller
         $pppkAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'PPPK')->count();
         $kontrakAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'Kontrak BLUD')->count();
 
-        // Resign status
-        $pnsResignCount = Pegawai::where('status_pegawai', 'resign')->where('status_asn', 'PNS')->count();
-        $pppkResignCount = Pegawai::where('status_pegawai', 'resign')->where('status_asn', 'PPPK')->count();
-        $kontrakResignCount = Pegawai::where('status_pegawai', 'resign')->where('status_asn', 'Kontrak BLUD')->count();
+        // NonAktif status
+        $pnsNonAktifCount = Pegawai::where('status_pegawai', 'nonaktif')->where('status_asn', 'PNS')->count();
+        $pppkNonAktifCount = Pegawai::where('status_pegawai', 'nonaktif')->where('status_asn', 'PPPK')->count();
+        $kontrakNonAktifCount = Pegawai::where('status_pegawai', 'nonaktif')->where('status_asn', 'Kontrak BLUD')->count();
 
         $jabatanPegawaiCount = JabatanPegawai::count();
 
@@ -79,9 +79,9 @@ class DashboardController extends Controller
             'pnsAktifCount',
             'pppkAktifCount',
             'kontrakAktifCount',
-            'pnsResignCount',
-            'pppkResignCount',
-            'kontrakResignCount'
+            'pnsNonAktifCount',
+            'pppkNonAktifCount',
+            'kontrakNonAktifCount'
         ));
     }
 }

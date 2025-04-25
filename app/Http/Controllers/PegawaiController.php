@@ -79,7 +79,7 @@ class PegawaiController extends Controller
             'status_asn' => 'required|in:PNS,PPPK,Kontrak BLUD',
             'tmt_asn' => 'nullable|date',
 
-            'status_pegawai' => 'required|in:aktif,resign',
+            'status_pegawai' => 'required|in:aktif,nonaktif',
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
             'tanggungan' => 'nullable|string',
 
@@ -164,7 +164,7 @@ class PegawaiController extends Controller
             'status_perkawinan' => 'required|in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati',
             'tanggungan' => 'nullable|string',
 
-            'status_pegawai' => 'required|in:aktif,resign',
+            'status_pegawai' => 'required|in:aktif,nonaktif',
 
             'alamat' => 'nullable|string',
             'rt' => 'nullable|string',
@@ -191,8 +191,8 @@ class PegawaiController extends Controller
         if ($oldStatus !== $newStatus) {
             if ($newStatus === 'aktif') {
                 return redirect()->route('pegawai.aktif')->with('success', 'Status pegawai diubah menjadi Aktif.');
-            } elseif ($newStatus === 'resign') {
-                return redirect()->route('pegawai.nonaktif')->with('success', 'Status pegawai diubah menjadi Resign.');
+            } elseif ($newStatus === 'nonaktif') {
+                return redirect()->route('pegawai.nonaktif')->with('success', 'Status pegawai diubah menjadi Non Aktif.');
             }
         }
 
@@ -218,12 +218,12 @@ class PegawaiController extends Controller
 
     public function aktif()
     {
-        return view('pegawai.index', ['status' => 'Aktif']);
+        return view('pegawai.index', ['status' => 'aktif']);
     }
 
     public function nonaktif()
     {
-        return view('pegawai.index', ['status' => 'Resign']);
+        return view('pegawai.index', ['status' => 'nonaktif']);
     }
 
     public function getData($status)
