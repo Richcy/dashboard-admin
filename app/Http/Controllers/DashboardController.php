@@ -19,6 +19,16 @@ class DashboardController extends Controller
         $pppkCount = Pegawai::where('status_asn', 'PPPK')->count();
         $kontrakCount = Pegawai::where('status_asn', 'Kontrak BLUD')->count();
 
+        // Aktif status
+        $pnsAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'PNS')->count();
+        $pppkAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'PPPK')->count();
+        $kontrakAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'Kontrak BLUD')->count();
+
+        // Resign status
+        $pnsResignCount = Pegawai::where('status_pegawai', 'resign')->where('status_asn', 'PNS')->count();
+        $pppkResignCount = Pegawai::where('status_pegawai', 'resign')->where('status_asn', 'PPPK')->count();
+        $kontrakResignCount = Pegawai::where('status_pegawai', 'resign')->where('status_asn', 'Kontrak BLUD')->count();
+
         $jabatanPegawaiCount = JabatanPegawai::count();
 
         $utamaCount = JabatanPegawai::where('status_jabatan', 'utama')->count();
@@ -65,7 +75,13 @@ class DashboardController extends Controller
             'kontrakCount',
             'jabatanUtamaCounts',
             'jabatanChartLabels',
-            'jabatanChartData'
+            'jabatanChartData',
+            'pnsAktifCount',
+            'pppkAktifCount',
+            'kontrakAktifCount',
+            'pnsResignCount',
+            'pppkResignCount',
+            'kontrakResignCount'
         ));
     }
 }

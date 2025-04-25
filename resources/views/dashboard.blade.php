@@ -39,19 +39,38 @@
     <div class="row">
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="Total Pegawai" text="{{ $pegawaiCount }}" icon="fas fa-users" theme="primary" />
+            <x-adminlte-info-box title="Total Pegawai Aktif" text="{{ $aktifCount }}" icon="fas fa-users" theme="primary" />
         </div>
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="Pegawai PNS" text="{{ $pnsCount }}" icon="fas fa-user-tie" theme="success" />
+            <x-adminlte-info-box title="PNS (Aktif)" text="{{ $pnsAktifCount }}" icon="fas fa-user-tie" theme="success" />
         </div>
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="Pegawai PPPK" text="{{ $pppkCount }}" icon="fas fa-user-tag" theme="warning" />
+            <x-adminlte-info-box title="PPPK (Aktif)" text="{{ $pppkAktifCount }}" icon="fas fa-user-tag" theme="warning" />
         </div>
 
         <div class="col-md-3 mt-3">
-            <x-adminlte-info-box title="Pegawai Kontrak BLUD" text="{{ $kontrakCount }}" icon="fas fa-user-clock" theme="info" />
+            <x-adminlte-info-box title="Kontrak BLUD (Aktif)" text="{{ $kontrakAktifCount }}" icon="fas fa-user-clock" theme="info" />
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3 mt-3">
+            <x-adminlte-info-box title="Total Pegawai Resign" text="{{ $nonAktifCount }}" icon="fas fa-users-slash" theme="primary" />
+        </div>
+
+        <div class="col-md-3 mt-3">
+            <x-adminlte-info-box title="PNS (Resign)" text="{{ $pnsResignCount }}" icon="fas fa-user-tie" theme="success" />
+        </div>
+
+        <div class="col-md-3 mt-3">
+            <x-adminlte-info-box title="PPPK (Resign)" text="{{ $pppkResignCount }}" icon="fas fa-user-tag" theme="warning" />
+        </div>
+
+        <div class="col-md-3 mt-3">
+            <x-adminlte-info-box title="Kontrak BLUD (Resign)" text="{{ $kontrakResignCount }}" icon="fas fa-user-clock" theme="info" />
         </div>
     </div>
 
