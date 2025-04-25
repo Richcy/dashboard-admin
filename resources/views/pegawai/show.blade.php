@@ -50,13 +50,26 @@
                                         <th>NIP/NPP</th>
                                         <td>{{ $pegawai->nip_npp }}</td>
                                     </tr>
+
+                                    <tr>
+                                        <th>Tempat Lahir</th>
+                                        <td>{{ $pegawai->tempat_lahir }}</td>
+                                    </tr>
                                     <tr>
                                         <th>Tanggal Lahir</th>
                                         <td>{{ \Carbon\Carbon::parse($pegawai->tanggal_lahir)->translatedFormat('j F Y') }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Umur</th>
+                                        <td>{{ $pegawai->umur }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>TMT Kerja</th>
                                         <td>{{ \Carbon\Carbon::parse($pegawai->tmt_kerja)->translatedFormat('j F Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Masa Kerja</th>
+                                        <td>{{ $pegawai->masaKerja }}</td>
                                     </tr>
                                     <tr>
                                         <th>Status ASN</th>

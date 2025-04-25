@@ -14,7 +14,13 @@
         <div class="col-md-12 mt-4">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Tabel Pegawai</h3>
+                    <h3 class="card-title">
+                        @if(request()->is('pegawai-aktif'))
+                        Tabel Pegawai Aktif
+                        @elseif(request()->is('pegawai-nonaktif'))
+                        Tabel Pegawai Non Aktif
+                        @endif
+                    </h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -31,7 +37,7 @@
                                     <th>NIP</th>
                                     <th>Status ASN</th>
                                     <th>Nomor HP</th>
-                                    <th>Status Pegawai</th>
+                                    <th>Masa Kerja</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -88,8 +94,8 @@
                     name: 'nomor_telepon'
                 },
                 {
-                    data: 'status_pegawai',
-                    name: 'status_pegawai'
+                    data: 'masa_kerja',
+                    name: 'masa_kerja'
                 },
                 {
                     data: 'action',

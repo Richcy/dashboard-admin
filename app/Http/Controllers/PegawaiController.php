@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Exports\PegawaiExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PegawaiImport;
+use Carbon\Carbon;
 
 class PegawaiController extends Controller
 {
@@ -18,6 +19,19 @@ class PegawaiController extends Controller
     public function index()
     {
         //
+        // $pegawai = Pegawai::all()->map(function ($pegawai) {
+        //     // Calculate Masa Kerja (Length of Service)
+        //     $masaKerja = Carbon::parse($pegawai->tmt_kerja);
+        //     $years = $masaKerja->diffInYears(Carbon::now());
+        //     $months = $masaKerja->diffInMonths(Carbon::now()) % 12; // Get the remaining months after years
+
+        //     $masaKerja = "{$years} Tahun {$months} Bulan";
+
+        //     // Add the calculated Masa Kerja to the pegawai object
+        //     $pegawai->masa_kerja = $masaKerja;
+        //     return $pegawai;
+        // });
+
         return view('pegawai.index');
     }
 
@@ -126,7 +140,34 @@ class PegawaiController extends Controller
             $backUrl = route('pegawai.aktif');
         }
         $pegawai = Pegawai::with(['pendidikan', 'jabatan'])->findOrFail($id);
-        return view('pegawai.show', compact('pegawai', 'backUrl'));
+
+        // Calculate 'umur' for the specific pegawai
+        $umur = Carbon::parse($pegawai->tanggal_lahir);
+        $totalMonths = $umur->diffInMonths(Carbon::now());
+        $years = intdiv($totalMonths, 12); // Full years
+        // $months = $totalMonths % 12; // Remaining months
+        // $remainingDays = (int) $umur->addYears($years)->addMonths($months)->diffInDays(Carbon::now());
+
+        // Format umur
+        $umur = "{$years} Tahun";
+
+        // Add umur to the pegawai instance (if needed in the view)
+        $pegawai->umur = $umur;
+
+        // Calculate 'umur' for the specific pegawai
+        $masaKerja = Carbon::parse($pegawai->tmt_kerja);
+        $totalMonths = $masaKerja->diffInMonths(Carbon::now());
+        $years = intdiv($totalMonths, 12); // Full years
+        $months = $totalMonths % 12; // Remaining months
+        // $remainingDays = (int) $masaKerja->addYears($years)->addMonths($months)->diffInDays(Carbon::now());
+
+        // Format umur
+        $masaKerja = "{$years} Tahun {$months} Bulan";
+
+        // Add umur to the pegawai instance (if needed in the view)
+        $pegawai->masaKerja = $masaKerja;
+
+        return view('pegawai.show', compact('pegawai', 'backUrl', 'umur', 'masaKerja'));
     }
 
     /**
@@ -134,8 +175,10 @@ class PegawaiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Find the Pegawai by ID
         $pegawai = Pegawai::findOrFail($id);
+
+        // Return the view and pass 'pegawai' and 'umur' variables
         return view('pegawai.edit', compact('pegawai'));
     }
 
@@ -228,24 +271,39 @@ class PegawaiController extends Controller
 
     public function getData($status)
     {
-        $pegawais = Pegawai::where('status_pegawai', $status)->select('*');
+        $pegawais = Pegawai::where('status_pegawai', $status)->select('*')->get();
+
+        $pegawais = $pegawais->map(function ($item) {
+            $masaKerja = Carbon::parse($item->tmt_kerja);
+
+            $totalMonths = $masaKerja->diffInMonths(Carbon::now());
+            $years = intdiv($totalMonths, 12);
+            $months = $totalMonths % 12;
+
+            // $adjustedDate = $masaKerja->addYears($years)->addMonths($months);
+            // $remainingDays = (int) $adjustedDate->diffInDays(Carbon::now());
+            $masaKerja = "{$years} Tahun {$months} Bulan";
+
+            $item->masa_kerja = $masaKerja;
+            return $item;
+        });
 
         return DataTables::of($pegawais)
             ->addColumn('action', function ($row) {
                 $showUrl = route('pegawai.show', $row->id);
                 $deleteUrl = route('pegawai.destroy', $row->id);
                 return '
-        <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
-        <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-            ' . csrf_field() . method_field('DELETE') . '
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Semua data pegawai ini akan terhapus.\nHapus data?\')">Hapus</button>
-
-        </form>';
+                <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
+                <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+                    ' . csrf_field() . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Semua data pegawai ini akan terhapus.\nHapus data?\')">Hapus</button>
+                </form>';
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
     }
+
 
     public function export()
     {
