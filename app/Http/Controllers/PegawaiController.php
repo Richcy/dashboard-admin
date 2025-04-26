@@ -85,6 +85,7 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'nip_npp' => 'required|unique:pegawais',
             'tmt_kerja' => 'required|date',
+            'jenis_tenaga' => 'nullable|in:struktural,nakes,non_nakes',
             'nik' => 'required|unique:pegawais',
 
             'tempat_lahir' => 'nullable|string',
@@ -167,6 +168,21 @@ class PegawaiController extends Controller
         // Add umur to the pegawai instance (if needed in the view)
         $pegawai->masaKerja = $masaKerja;
 
+        $jenisTenagaMap = [
+            'nakes' => 'Tenaga Kesehatan',
+            'non_nakes' => 'Tenaga Non-Kesehatan',
+        ];
+
+        $posisiJabatanMap = [
+            'struktural' => 'Struktural',
+            'jabfung' => 'Jabatan Fungsional',
+            'pelaksana' => 'Pelaksana',
+            'honorer' => 'Honorer',
+        ];
+
+        $pegawai->jenis_tenaga_label = $jenisTenagaMap[$pegawai->jenis_tenaga] ?? '-';
+        $pegawai->posisi_jabatan_label = $posisiJabatanMap[$pegawai->posisi_jabatan] ?? '-';
+
         return view('pegawai.show', compact('pegawai', 'backUrl', 'umur', 'masaKerja'));
     }
 
@@ -196,6 +212,8 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'nip_npp' => 'required|unique:pegawais,nip_npp,' . $pegawai->id,
             'tmt_kerja' => 'required|date',
+            'jenis_tenaga' => 'nullable|in:struktural,nakes,non_nakes',
+            'posisi_jabatan' => 'nullable|in:struktural,jabfung,pelaksana,honorer',
             'nik' => 'required|unique:pegawais,nik,' . $pegawai->id,
 
             'tempat_lahir' => 'nullable|string',

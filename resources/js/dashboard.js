@@ -8,7 +8,7 @@ const ctx = document.getElementById('pegawaiChart').getContext('2d');
 const pegawaiChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: [''], // use empty string so bars don’t group by label
+        labels: [''], // keep empty label to avoid grouping
         datasets: chartLabels.map((label, index) => ({
             label: label,
             data: [chartData[index]],
@@ -21,7 +21,23 @@ const pegawaiChart = new Chart(ctx, {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'bottom' // moves legend below the chart
+                position: 'bottom',
+                labels: {
+                    generateLabels: function (chart) {
+                        const datasets = chart.data.datasets;
+
+                        // Build legend items for each dataset
+                        const labels = datasets.map((dataset, i) => ({
+                            text: `${dataset.label} (${dataset.data[0]} Orang)`,
+                            fillStyle: dataset.backgroundColor,
+                            strokeStyle: dataset.borderColor || dataset.backgroundColor,
+                            index: i,
+                            fontColor: 'rgba(17, 17, 17, 0.8)'
+                        }));
+
+                        return labels;
+                    }
+                }
             }
         },
         scales: {
@@ -32,11 +48,12 @@ const pegawaiChart = new Chart(ctx, {
                 }
             },
             x: {
-                display: false // hide x-axis since we’re using one category
+                display: false
             }
         }
     }
 });
+
 
 // Chart for Status Jabatan Pegawai (Position Status)
 const chartElement2 = document.getElementById('chartWrapper2');
@@ -109,7 +126,7 @@ const jabatanUtamaChart = new Chart(ctx3, {
                         return data.labels.map((label, i) => {
                             const dataset = chart.data.datasets[0];
                             return {
-                                text: `${dataset.data[i]} ${label}`,
+                                text: `${label} (${dataset.data[i]} Orang)`,
                                 fillStyle: dataset.backgroundColor[i],
                                 strokeStyle: dataset.borderColor ? dataset.borderColor[i] : dataset.backgroundColor[i],
                                 index: i,
@@ -128,5 +145,60 @@ const jabatanUtamaChart = new Chart(ctx3, {
             }
         }
 
+    }
+});
+
+const chartElement4 = document.getElementById('jenisTenagaKerjaWrapper');
+const chartLabels4 = JSON.parse(chartElement4.dataset.labels);
+const chartData4 = JSON.parse(chartElement4.dataset.values);
+const chartBackgroundColor4 = JSON.parse(chartElement4.dataset.backgroundColor);
+
+const ctx4 = document.getElementById('chartJenisTenagaData').getContext('2d');
+const chartJenisTenagaData = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: [''], // keep empty label to avoid grouping
+        datasets: chartLabels4.map((label, index) => ({
+            label: label,
+            data: [chartData4[index]],
+            backgroundColor: chartBackgroundColor4[index],
+            borderWidth: 1
+        }))
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    generateLabels: function (chart) {
+                        const datasets = chart.data.datasets;
+
+                        // Build legend items for each dataset
+                        const labels = datasets.map((dataset, i) => ({
+                            text: `${dataset.label} (${dataset.data[0]} Orang)`,
+                            fillStyle: dataset.backgroundColor,
+                            strokeStyle: dataset.borderColor || dataset.backgroundColor,
+                            index: i,
+                            fontColor: 'rgba(17, 17, 17, 0.8)'
+                        }));
+
+                        return labels;
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    precision: 0
+                }
+            },
+            x: {
+                display: false
+            }
+        }
     }
 });

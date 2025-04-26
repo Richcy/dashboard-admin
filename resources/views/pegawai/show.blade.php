@@ -68,6 +68,14 @@
                                         <td>{{ \Carbon\Carbon::parse($pegawai->tmt_kerja)->translatedFormat('j F Y') }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Jenis Tenaga</th>
+                                        <td>{{ $pegawai->jenis_tenaga_label }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Posisi Jabatan</th>
+                                        <td>{{ $pegawai->posisi_jabatan_label }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Masa Kerja</th>
                                         <td>{{ $pegawai->masaKerja }}</td>
                                     </tr>

@@ -18,6 +18,7 @@ class Pegawai extends Model
         'jenis_kelamin',
         'nip_npp',
         'tmt_kerja',
+        'jenis_tenaga',
         'nik',
         'tanggal_lahir',
         'tempat_lahir',

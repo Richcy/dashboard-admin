@@ -92,6 +92,33 @@
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="jenis_tenaga" class="form-label">Jenis Tenaga</label>
+                            <select class="form-control @error('jenis_tenaga') is-invalid @enderror" id="jenis_tenaga" name="jenis_tenaga">
+                                <option value="">-- Pilih Jenis Tenaga --</option>
+                                <option value="nakes" {{ old('jenis_tenaga', $pegawai->jenis_tenaga ?? '') == 'nakes' ? 'selected' : '' }}>Tenaga Kesehatan</option>
+                                <option value="non_nakes" {{ old('jenis_tenaga', $pegawai->jenis_tenaga ?? '') == 'non nakes' ? 'selected' : '' }}>Tenaga Non-Kesehatan</option>
+                            </select>
+                            @error('jenis_tenaga')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="posisi_jabatan" class="form-label">Posisi Jabatan</label>
+                            <select class="form-control @error('posisi_jabatan') is-invalid @enderror" id="posisi_jabatan" name="posisi_jabatan">
+                                <option value="">-- Pilih Posisi Jabatan --</option>
+                                <option value="struktural" {{ old('posisi_jabatan', $pegawai->posisi_jabatan ?? '') == 'struktural' ? 'selected' : '' }}>Struktural</option>
+                                <option value="jabfung" {{ old('posisi_jabatan', $pegawai->posisi_jabatan ?? '') == 'jabfung' ? 'selected' : '' }}>Jabatan Fungsional</option>
+                                <option value="pelaksana" {{ old('posisi_jabatan', $pegawai->posisi_jabatan ?? '') == 'pelaksana' ? 'selected' : '' }}>Pelaksana</option>
+                                <option value="honorer" {{ old('posisi_jabatan', $pegawai->posisi_jabatan ?? '') == 'honorer' ? 'selected' : '' }}>Honorer</option>
+                            </select>
+                            @error('posisi_jabatan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
                         <!-- Status ASN & TMT ASN -->
                         <div class="row">
                             <div class="col-md-6 mb-3">

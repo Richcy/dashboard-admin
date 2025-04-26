@@ -22,6 +22,8 @@ class PegawaiFactory extends Factory
             'jenis_kelamin' => $this->faker->randomElement(['Laki-Laki', 'Perempuan']),
             'nip_npp' => $this->faker->unique()->numerify('#############'),
             'tmt_kerja' => $this->faker->date(),
+            'jenis_tenaga' => $this->faker->randomElement(['nakes', 'non_nakes']),
+            'posisi_jabatan' => $this->faker->randomElement(['struktural', 'jabfung', 'pelaksana', 'honorer']),
             'nik' => $this->faker->unique()->numerify('#############'),
             'tanggal_lahir' => $this->faker->date(),
             'tempat_lahir' => $this->faker->city,

@@ -143,6 +143,28 @@
 
             </div>
         </div>
+        <div class="col-md-6 mt-3">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h5 class="card-title">Visualisasi Data Jenis Tenaga (Aktif)</h5>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button> -->
+                    </div>
+                </div>
+                <div class="card-body" id="jenisTenagaKerjaWrapper" style="height: 40vh;"
+                    data-labels='@json($chartJenisTenagaData["labels"])'
+                    data-values='@json($chartJenisTenagaData["data"])'
+                    data-background-color='@json($chartJenisTenagaData["backgroundColor"])'>
+                    <canvas id="chartJenisTenagaData"></canvas>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 

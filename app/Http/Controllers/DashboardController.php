@@ -24,6 +24,9 @@ class DashboardController extends Controller
         $pppkAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'PPPK')->count();
         $kontrakAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('status_asn', 'Kontrak BLUD')->count();
 
+        $nakesAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('jenis_tenaga', 'nakes')->count();
+        $nonNakesAktifCount = Pegawai::where('status_pegawai', 'aktif')->where('jenis_tenaga', 'non_nakes')->count();
+
         // NonAktif status
         $pnsNonAktifCount = Pegawai::where('status_pegawai', 'nonaktif')->where('status_asn', 'PNS')->count();
         $pppkNonAktifCount = Pegawai::where('status_pegawai', 'nonaktif')->where('status_asn', 'PPPK')->count();
@@ -74,6 +77,15 @@ class DashboardController extends Controller
         $jabatanChartLabels = $jabatanUtamaCounts->pluck('jabatan');
         $jabatanChartData = $jabatanUtamaCounts->pluck('total');
 
+        $chartJenisTenagaData = [
+            'labels' => ['Tenaga Kesehatan', 'Tenaga Non-Kesehatan'],
+            'data' => [
+                $nakesAktifCount,
+                $nonNakesAktifCount
+            ],
+            'backgroundColor' => ['#4e73df', '#e74a3b', '#d1de1f'],
+        ];
+
         $counts = [
             'pegawaiCount' => $pegawaiCount,
             'jabatanPegawaiCount' => $jabatanPegawaiCount,
@@ -99,6 +111,7 @@ class DashboardController extends Controller
             'jabatanChartLabels' => $jabatanChartLabels,
             'jabatanChartData' => $jabatanChartData,
             'jabatanUtamaCounts' => $jabatanUtamaCounts,
+            'chartJenisTenagaData' => $chartJenisTenagaData
         ];
 
         // Pass the data to the view
