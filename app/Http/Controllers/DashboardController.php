@@ -34,6 +34,9 @@ class DashboardController extends Controller
         $utamaCount = JabatanPegawai::where('status_jabatan', 'utama')->count();
         $tambahanCount = JabatanPegawai::where('status_jabatan', 'tambahan')->count();
         $jabatanUtamaCounts = JabatanPegawai::where('status_jabatan', 'utama')
+            ->whereHas('pegawai', function ($query) {
+                $query->where('status_pegawai', 'aktif');
+            })
             ->select('jabatan', \DB::raw('count(*) as total'))
             ->groupBy('jabatan')
             ->get();
@@ -71,29 +74,34 @@ class DashboardController extends Controller
         $jabatanChartLabels = $jabatanUtamaCounts->pluck('jabatan');
         $jabatanChartData = $jabatanUtamaCounts->pluck('total');
 
+        $counts = [
+            'pegawaiCount' => $pegawaiCount,
+            'jabatanPegawaiCount' => $jabatanPegawaiCount,
+            'aktifCount' => $aktifCount,
+            'nonAktifCount' => $nonAktifCount,
+            'utamaCount' => $utamaCount,
+            'tambahanCount' => $tambahanCount,
+            'pnsCount' => $pnsCount,
+            'pppkCount' => $pppkCount,
+            'kontrakCount' => $kontrakCount,
+            'pnsAktifCount' => $pnsAktifCount,
+            'pppkAktifCount' => $pppkAktifCount,
+            'kontrakAktifCount' => $kontrakAktifCount,
+            'pnsNonAktifCount' => $pnsNonAktifCount,
+            'pppkNonAktifCount' => $pppkNonAktifCount,
+            'kontrakNonAktifCount' => $kontrakNonAktifCount,
+        ];
+
+        $charts = [
+            'chartData' => $chartData,
+            'chartData2' => $chartData2,
+            'chartData3' => $chartData3,
+            'jabatanChartLabels' => $jabatanChartLabels,
+            'jabatanChartData' => $jabatanChartData,
+            'jabatanUtamaCounts' => $jabatanUtamaCounts,
+        ];
+
         // Pass the data to the view
-        return view('dashboard', compact(
-            'pegawaiCount',
-            'jabatanPegawaiCount',
-            'chartData',
-            'chartData2',
-            'chartData3',
-            'aktifCount',
-            'nonAktifCount',
-            'utamaCount',
-            'tambahanCount',
-            'pnsCount',
-            'pppkCount',
-            'kontrakCount',
-            'jabatanUtamaCounts',
-            'jabatanChartLabels',
-            'jabatanChartData',
-            'pnsAktifCount',
-            'pppkAktifCount',
-            'kontrakAktifCount',
-            'pnsNonAktifCount',
-            'pppkNonAktifCount',
-            'kontrakNonAktifCount'
-        ));
+        return view('dashboard', array_merge($counts, $charts));
     }
 }

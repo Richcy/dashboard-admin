@@ -125,7 +125,7 @@
         <div class="col-md-6 mt-3">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h5 class="card-title">Visualisasi Jabatan Utama Pegawai</h5>
+                    <h5 class="card-title">Visualisasi Jabatan Utama Pegawai (Aktif)</h5>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>

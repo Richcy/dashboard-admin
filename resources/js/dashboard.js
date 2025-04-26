@@ -102,7 +102,22 @@ const jabatanUtamaChart = new Chart(ctx3, {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                labels: {
+                    generateLabels: function (chart) {
+                        const data = chart.data;
+                        return data.labels.map((label, i) => {
+                            const dataset = chart.data.datasets[0];
+                            return {
+                                text: `${dataset.data[i]} ${label}`,
+                                fillStyle: dataset.backgroundColor[i],
+                                strokeStyle: dataset.borderColor ? dataset.borderColor[i] : dataset.backgroundColor[i],
+                                index: i,
+                                fontColor: 'rgba(17, 17, 17, 0.8)'
+                            };
+                        });
+                    }
+                }
             },
             tooltip: {
                 callbacks: {
@@ -112,5 +127,6 @@ const jabatanUtamaChart = new Chart(ctx3, {
                 }
             }
         }
+
     }
 });
