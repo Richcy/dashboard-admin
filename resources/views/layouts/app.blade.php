@@ -79,6 +79,8 @@
         // Add your common script logic here...
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@vite('resources/js/app.js')
 @endpush
 
 {{-- Add common CSS customizations --}}

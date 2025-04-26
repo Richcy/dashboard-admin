@@ -250,13 +250,15 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
         //
         $pegawai = Pegawai::findOrFail($id);
         $pegawai->delete();
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus');
+        return redirect()->route(
+            $request->status_pegawai === 'aktif' ? 'pegawai.aktif' : 'pegawai.nonaktif'
+        )->with('success', 'Data pegawai berhasil dihapus.');
     }
 
     public function aktif()
@@ -296,7 +298,8 @@ class PegawaiController extends Controller
                 <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
                 <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
                     ' . csrf_field() . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Semua data pegawai ini akan terhapus.\nHapus data?\')">Hapus</button>
+                    <input type="hidden" name="status_pegawai" value="' . $row->status_pegawai . '">
+                    <button type="button" class="btn btn-sm btn-danger delete-confirm">Hapus</button>
                 </form>';
             })
             ->addIndexColumn()
