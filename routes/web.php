@@ -7,6 +7,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PendidikanPegawaiController;
 use App\Http\Controllers\JabatanPegawaiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -28,6 +29,8 @@ Route::middleware(['login.warning'])->group(function () {
     Route::get('/pegawai-data/{status}', [PegawaiController::class, 'getData'])->name('pegawai.data');
     Route::get('/export-pegawai', [PegawaiController::class, 'export'])->name('pegawai.export');
     Route::post('/pegawai/import', [PegawaiController::class, 'import'])->name('pegawai.import');
+    Route::get('/admin/settings', [ProfileController::class, 'edit'])->name('profile.settings');
+    Route::put('/admin/settings', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::resource('pegawai', PegawaiController::class);
     Route::resource('pendidikan-pegawai', PendidikanPegawaiController::class);
