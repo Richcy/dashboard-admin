@@ -360,6 +360,11 @@ return [
             'url' => 'jabatan-pegawai',
             'icon' => 'fas fa-fw fa fa-building',
         ],
+        [
+            'text' => 'Riwayat Pegawai',
+            'url' => 'riwayat-pegawai',
+            'icon' => 'fas fa-fw fa fa-clock',
+        ],
 
 
         ['header' => 'account_settings'],

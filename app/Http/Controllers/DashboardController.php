@@ -44,6 +44,29 @@ class DashboardController extends Controller
             ->groupBy('jabatan')
             ->get();
 
+        // Get all pegawai records with their pendidikan, ordered by the rank of pendidikan
+        $pegawais = Pegawai::with('pendidikan')
+            ->get(); // Or use ->paginate() if you want pagination
+
+        // Define the degree order to be used for sorting
+        $degreeOrder = ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'];
+
+        // Create an array to hold the count of pegawai with each degree
+        $degreeCount = [];
+
+        // Loop through each pegawai to determine their latest pendidikan
+        foreach ($pegawais as $pegawai) {
+            // Sort the pendidikan records for the pegawai
+            $latestPendidikan = $pegawai->pendidikan
+                ->sortByDesc(fn($p) => array_search($p->pendidikan, $degreeOrder))
+                ->first();
+
+            // Check if the pendidikan level exists in the count array, if not, initialize it
+            if (isset($latestPendidikan)) {
+                $degreeCount[$latestPendidikan->pendidikan] = ($degreeCount[$latestPendidikan->pendidikan] ?? 0) + 1;
+            }
+        }
+
         $chartData = [
             'labels' => ['Aktif', 'Nonaktif'],
             'data' => [
@@ -77,6 +100,21 @@ class DashboardController extends Controller
         $jabatanChartLabels = $jabatanUtamaCounts->pluck('jabatan');
         $jabatanChartData = $jabatanUtamaCounts->pluck('total');
 
+        // Add color + icon processing here
+        $themeColors = ['primary', 'secondary', 'info', 'success', 'danger', 'warning', 'dark'];
+        $iconDefault = 'fas fa-briefcase';
+
+        // Prepare boxed data for display
+        $jabatanInfoBoxes = [];
+        foreach ($jabatanChartLabels as $index => $jabatan) {
+            $jabatanInfoBoxes[] = [
+                'title' => $jabatan,
+                'total' => $jabatanChartData[$index],
+                'icon' => $iconDefault,
+                'theme' => $themeColors[$index % count($themeColors)],
+            ];
+        }
+
         $chartJenisTenagaData = [
             'labels' => ['Tenaga Kesehatan', 'Tenaga Non-Kesehatan'],
             'data' => [
@@ -102,6 +140,8 @@ class DashboardController extends Controller
             'pnsNonAktifCount' => $pnsNonAktifCount,
             'pppkNonAktifCount' => $pppkNonAktifCount,
             'kontrakNonAktifCount' => $kontrakNonAktifCount,
+            'degreeCount' => $degreeCount,
+            'jabatanInfoBoxes' => $jabatanInfoBoxes,
         ];
 
         $charts = [

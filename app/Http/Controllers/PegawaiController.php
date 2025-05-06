@@ -10,6 +10,7 @@ use App\Exports\PegawaiExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PegawaiImport;
 use Carbon\Carbon;
+use App\Models\RiwayatPegawai;
 
 class PegawaiController extends Controller
 {
@@ -242,11 +243,20 @@ class PegawaiController extends Controller
             'email' => 'nullable|email',
         ]);
 
-        $oldStatus = $pegawai->status_pegawai; // get current status before update
+        $oldStatus = $pegawai->status_pegawai; // old value
+        $newStatus = $request->input('status_pegawai'); // new value from form
+
+        if ($oldStatus !== $newStatus) {
+            RiwayatPegawai::create([
+                'pegawai_id' => $pegawai->id,
+                'status_lama' => $oldStatus,
+                'status_baru' => $newStatus,
+                'tanggal_perubahan' => now(),
+                'keterangan' => $request->input('alasan_perubahan'),
+            ]);
+        }
 
         $pegawai->update($request->all());
-
-        $newStatus = $request->status_pegawai;
 
         // Check if status_pegawai changed and redirect accordingly
         if ($oldStatus !== $newStatus) {

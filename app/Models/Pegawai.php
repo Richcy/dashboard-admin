@@ -57,4 +57,14 @@ class Pegawai extends Model
     {
         return $this->hasMany(JabatanPegawai::class);
     }
+
+    public function riwayat()
+    {
+        return $this->hasMany(RiwayatPegawai::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(DocumentPegawai::class);
+    }
 }

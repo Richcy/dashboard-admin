@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('riwayat_pegawai', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pegawai_id')->constrained()->onDelete('cascade');
+            $table->string('status_lama')->nullable(); // e.g. "aktif"
+            $table->string('status_baru');             // e.g. "non-aktif"
+            $table->date('tanggal_perubahan');         // when the change happened
+            $table->text('keterangan')->nullable();    // optional reason for the change
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('riwayat_pegawai');
+    }
+};

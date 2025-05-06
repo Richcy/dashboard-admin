@@ -86,7 +86,7 @@ class PegawaiExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
             'E' => NumberFormat::FORMAT_NUMBER, // NIP/NPP column
             'G' => NumberFormat::FORMAT_NUMBER, // NIK column
             'W' => NumberFormat::FORMAT_NUMBER, // No Rekening column
-            'X' => NumberFormat::FORMAT_TEXT, // NPWP column
+            'X' => NumberFormat::FORMAT_NUMBER, // NPWP column
             'Y' => NumberFormat::FORMAT_NUMBER, // No Telepon column
         ];
     }

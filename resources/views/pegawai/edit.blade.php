@@ -97,7 +97,7 @@
                             <select class="form-control @error('jenis_tenaga') is-invalid @enderror" id="jenis_tenaga" name="jenis_tenaga">
                                 <option value="">-- Pilih Jenis Tenaga --</option>
                                 <option value="nakes" {{ old('jenis_tenaga', $pegawai->jenis_tenaga ?? '') == 'nakes' ? 'selected' : '' }}>Tenaga Kesehatan</option>
-                                <option value="non_nakes" {{ old('jenis_tenaga', $pegawai->jenis_tenaga ?? '') == 'non nakes' ? 'selected' : '' }}>Tenaga Non-Kesehatan</option>
+                                <option value="non_nakes" {{ old('jenis_tenaga', $pegawai->jenis_tenaga ?? '') == 'non_nakes' ? 'selected' : '' }}>Tenaga Non-Kesehatan</option>
                             </select>
                             @error('jenis_tenaga')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -262,6 +262,17 @@
                             @enderror
                         </div>
 
+                        <div class="mb-3" id="alasan_wrapper" style="display: none;">
+                            <label for="alasan_perubahan" class="form-label">Alasan Perubahan Status</label>
+                            <textarea
+                                class="form-control @error('alasan_perubahan') is-invalid @enderror"
+                                id="alasan_perubahan"
+                                name="alasan_perubahan">{{ old('alasan_perubahan', $pegawai->alasan_perubahan ?? '') }}</textarea>
+                            @error('alasan_perubahan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                     </div>
 
                     <div class="card-footer">
@@ -277,4 +288,22 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectStatus = document.getElementById('status_pegawai');
+        const alasanWrapper = document.getElementById('alasan_wrapper');
+        const originalStatus = '{{ $pegawai->status_pegawai }}';
+
+        selectStatus.addEventListener('change', function() {
+            if (this.value !== originalStatus) {
+                alasanWrapper.style.display = 'block';
+            } else {
+                alasanWrapper.style.display = 'none';
+            }
+        });
+    });
+</script>
 @endsection
