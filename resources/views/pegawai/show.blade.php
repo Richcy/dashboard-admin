@@ -29,17 +29,16 @@
                                 <div>
                                     <h3>Informasi Pegawai</h3>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3 position-relative d-inline-block">
                                     @php
                                     $foto = $pegawai->documents()->where('jenis_dokumen', 'foto')->first();
+                                    $fotoPath = $foto ? asset('storage/' . $foto->path) : asset('images/default.png');
                                     @endphp
-                                    @if ($foto)
-                                    <img id="previewFoto" src="{{ asset('storage/' . $foto->path) }}" class="img-thumbnail" width="120">
-                                    @else
-                                    <img id="previewFoto" src="{{ asset('images/default.png') }}" class="img-thumbnail" width="120">
-                                    @endif
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#changeFotoModal">
-                                        Ganti Foto
+
+                                    <!-- Clickable image as modal trigger -->
+                                    <button type="button" class="border-0 p-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#changeFotoModal">
+                                        <img id="fotoPreviewDisplay" src="{{ $fotoPath }}" class="img-thumbnail" width="400" style="cursor: pointer;">
+
                                     </button>
                                 </div>
                                 <table class="table table-bordered table-striped">
@@ -265,28 +264,20 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Content -->
     <div class="modal fade" id="changeFotoModal" tabindex="-1" aria-labelledby="changeFotoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ route('pegawai.update-foto', $pegawai->id) }}" enctype="multipart/form-data">
+            <form action="{{ route('pegawai.update-foto', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="changeFotoModalLabel">Ganti Foto Pegawai</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3 text-center">
-                            <img id="previewFoto" src="{{ asset('storage/' . $foto->path) }}" class="img-thumbnail" width="120">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="foto" class="form-label">Pilih Foto Baru</label>
-                            <input type="file" name="foto" id="foto" class="form-control @error('foto') is-invalid @enderror" accept="image/*" onchange="previewFoto(this)">
-                            @error('foto') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
+                    <div class="modal-body text-center">
+                        <img id="fotoPreviewModal" src="{{ $fotoPath }}" class="img-thumbnail mb-3" width="400">
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="previewFoto(this)">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -296,16 +287,20 @@
             </form>
         </div>
     </div>
+
     @endsection
 
     @section('js')
     <script>
         function previewFoto(input) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('previewFoto').src = e.target.result;
+            const previewModal = document.getElementById('fotoPreviewModal');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewModal.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
             }
-            reader.readAsDataURL(input.files[0]);
         }
     </script>
     @endsection

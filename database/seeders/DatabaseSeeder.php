@@ -9,6 +9,7 @@ use App\Models\Pegawai;
 use App\Models\PendidikanPegawai;
 use App\Models\JabatanPegawai;
 use Illuminate\Support\Facades\DB;
+use App\Models\DocumentPegawai;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,13 @@ class DatabaseSeeder extends Seeder
             Pegawai::factory(250)->create();
 
             $pegawais = Pegawai::all();
+
+            // foreach ($pegawais as $pegawai) {
+            //     DocumentPegawai::factory()->create([
+            //         'pegawai_id' => $pegawai->id,
+            //         // You can add other fields if needed, e.g. 'jenis_dokumen' => 'foto'
+            //     ]);
+            // }
 
             foreach ($pegawais as $pegawai) {
                 PendidikanPegawai::factory()
