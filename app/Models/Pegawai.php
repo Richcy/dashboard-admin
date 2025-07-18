@@ -72,4 +72,9 @@ class Pegawai extends Model
     {
         return $this->hasMany(DocumentPegawai::class);
     }
+
+    public function sertifikat()
+    {
+        return $this->hasMany(SertifikatPegawai::class);
+    }
 }

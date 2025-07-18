@@ -10,6 +10,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiwayatPegawaiController;
 use App\Http\Controllers\DocumentPegawaiController;
+use App\Http\Controllers\SertifikatPegawaiController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -27,6 +29,7 @@ Route::middleware(['login.warning'])->group(function () {
 
     Route::get('/pendidikan-pegawai/data', [PendidikanPegawaiController::class, 'getData'])->name('pendidikan-pegawai.data');
     Route::get('/jabatan-pegawai/data', [JabatanPegawaiController::class, 'getData'])->name('jabatan-pegawai.data');
+    Route::get('/sertifikat-pegawai/data', [SertifikatPegawaiController::class, 'getData'])->name('sertifikat-pegawai.data');
     Route::get('/riwayat-pegawai/data', [RiwayatPegawaiController::class, 'getData'])->name('riwayat-pegawai.data');
     Route::get('/riwayat-pegawai', [RiwayatPegawaiController::class, 'index'])->name('riwayat-pegawai.index');
     Route::get('/pegawai-aktif', [PegawaiController::class, 'aktif'])->name('pegawai.aktif');
@@ -45,4 +48,5 @@ Route::middleware(['login.warning'])->group(function () {
     Route::resource('pegawai', PegawaiController::class);
     Route::resource('pendidikan-pegawai', PendidikanPegawaiController::class);
     Route::resource('jabatan-pegawai', JabatanPegawaiController::class);
+    Route::resource('sertifikat-pegawai', SertifikatPegawaiController::class);
 });

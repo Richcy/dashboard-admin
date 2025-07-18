@@ -21,6 +21,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="jabatan-tab" data-toggle="tab" href="#jabatan" role="tab">Jabatan</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="sertifikat-tab" data-toggle="tab" href="#sertifikat" role="tab">Sertifikat</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-body">
@@ -255,7 +258,50 @@
                                         </tbody>
                                     </table>
                                 </div>
-
+                            </div>
+                            <div class="tab-pane fade" id="sertifikat" role="tabpanel" aria-labelledby="sertifikat-tab">
+                                <div>
+                                    <h3>Sertifikat Pegawai</h3>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="sertifikat-table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama Pegawai</th>
+                                                <th>Jenis Sertifikat</th>
+                                                <th>Nomor</th>
+                                                <th>Tanggal Terbit</th>
+                                                <th>Tanggal Kadaluarsa</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($pegawai->sertifikat as $index => $p)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $pegawai->nama_dengan_gelar }}</td>
+                                                <td>{{ $p->jenis_sertifikat }}</td>
+                                                <td>{{ $p->nomor }}</td>
+                                                <td>{{ $p->tgl_terbit }}</td>
+                                                <td>{{ $p->tgl_kadaluarsa }}</td>
+                                                <td>
+                                                    <a href="{{ route('sertifikat-pegawai.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                                    <form action="{{ route('sertifikat-pegawai.destroy', $p->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus data?')">Hapus</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <tr>
+                                                <td colspan="8" class="text-center">Belum ada data sertifikat</td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
