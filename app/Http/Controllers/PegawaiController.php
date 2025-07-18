@@ -301,24 +301,23 @@ class PegawaiController extends Controller
 
     public function getData($status)
     {
-        $pegawais = Pegawai::where('status_pegawai', $status)->select('*')->get();
+        $pegawais = Pegawai::with('jabatanUtama')->where('status_pegawai', $status)->get();
 
         $pegawais = $pegawais->map(function ($item) {
             $masaKerja = Carbon::parse($item->tmt_kerja);
-
             $totalMonths = $masaKerja->diffInMonths(Carbon::now());
             $years = intdiv($totalMonths, 12);
             $months = $totalMonths % 12;
 
-            // $adjustedDate = $masaKerja->addYears($years)->addMonths($months);
-            // $remainingDays = (int) $adjustedDate->diffInDays(Carbon::now());
-            $masaKerja = "{$years} Tahun {$months} Bulan";
+            $item->masa_kerja = "{$years} Tahun {$months} Bulan";
 
-            $item->masa_kerja = $masaKerja;
             return $item;
         });
 
         return DataTables::of($pegawais)
+            ->addColumn('jabatan_utama', function ($row) {
+                return $row->jabatanUtama?->jabatan ?? '-';
+            })
             ->addColumn('action', function ($row) {
                 $showUrl = route('pegawai.show', $row->id);
                 $deleteUrl = route('pegawai.destroy', $row->id);

@@ -58,6 +58,11 @@ class Pegawai extends Model
         return $this->hasMany(JabatanPegawai::class);
     }
 
+    public function jabatanUtama()
+    {
+        return $this->hasOne(JabatanPegawai::class)->where('status_jabatan', 'utama');
+    }
+
     public function riwayat()
     {
         return $this->hasMany(RiwayatPegawai::class);

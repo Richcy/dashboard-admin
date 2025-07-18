@@ -34,8 +34,11 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
+                                    <th>NIK</th>
                                     <th>NIP</th>
                                     <th>Status ASN</th>
+                                    <th>Status Nakes/Non-Nakes</th>
+                                    <th>Jabatan</th>
                                     <th>Nomor HP</th>
                                     <th>Masa Kerja</th>
                                     <th>Aksi</th>
@@ -82,12 +85,24 @@
                     name: 'nama_dengan_gelar'
                 },
                 {
+                    data: 'nik',
+                    name: 'nik'
+                },
+                {
                     data: 'nip_npp',
                     name: 'nip_npp'
                 },
                 {
                     data: 'status_asn',
                     name: 'status_asn'
+                },
+                {
+                    data: 'jenis_tenaga',
+                    name: 'jenis_tenaga'
+                },
+                {
+                    data: 'jabatan_utama',
+                    name: 'jabatan_utama'
                 },
                 {
                     data: 'nomor_telepon',
