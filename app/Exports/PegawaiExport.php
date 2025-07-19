@@ -24,6 +24,7 @@ class PegawaiExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                 'Jenis Kelamin'       => $pegawai->jenis_kelamin,
                 'NIP NPP'             => $pegawai->nip_npp,
                 'TMT Kerja'           => optional($pegawai->tmt_kerja)->translatedFormat('d F Y'),
+                'Jenis Tenaga'        => $pegawai->jenis_tenaga,
                 'NIK'                 => $pegawai->nik,
                 'Tempat Lahir'        => $pegawai->tempat_lahir,
                 'Tanggal Lahir'       => optional($pegawai->tanggal_lahir)->translatedFormat('d F Y'),
@@ -57,6 +58,7 @@ class PegawaiExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
             'Jenis Kelamin',
             'NIP/NPP',
             'TMT Kerja',
+            'Jenis Tenaga',
             'NIK',
             'Tempat Lahir',
             'Tanggal Lahir',
@@ -84,10 +86,10 @@ class PegawaiExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     {
         return [
             'E' => NumberFormat::FORMAT_NUMBER, // NIP/NPP column
-            'G' => NumberFormat::FORMAT_NUMBER, // NIK column
-            'W' => NumberFormat::FORMAT_NUMBER, // No Rekening column
-            'X' => NumberFormat::FORMAT_NUMBER, // NPWP column
-            'Y' => NumberFormat::FORMAT_NUMBER, // No Telepon column
+            'H' => NumberFormat::FORMAT_NUMBER, // NIK column
+            'X' => NumberFormat::FORMAT_NUMBER, // No Rekening column
+            'Y' => NumberFormat::FORMAT_NUMBER, // NPWP column
+            'Z' => NumberFormat::FORMAT_NUMBER, // No Telepon column
         ];
     }
 

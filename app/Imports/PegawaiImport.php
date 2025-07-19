@@ -24,6 +24,7 @@ class PegawaiImport implements ToModel, WithHeadingRow, SkipsEmptyRows
             'jenis_kelamin'       => $row['jenis_kelamin'] ?? 'Laki-Laki',
             'nip_npp'             => $row['nipnpp'],
             'tmt_kerja'           => $this->parseDate($row['tmt_kerja']),
+            'jenis_tenaga'        => $row['jenis_tenaga'],
             'nik'                 => $row['nik'],
             'tempat_lahir'        => $row['tempat_lahir'] ?? null,
             'tanggal_lahir'       => $this->parseDate($row['tanggal_lahir'] ?? null),
