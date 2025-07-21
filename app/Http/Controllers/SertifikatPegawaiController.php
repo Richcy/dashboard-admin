@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\SertifikatPegawai;
 use App\Models\Pegawai;
+use App\Models\DocumentPegawai;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class SertifikatPegawaiController extends Controller
 {
@@ -23,20 +25,26 @@ class SertifikatPegawaiController extends Controller
                 return $row->pegawai->nama_dengan_gelar ?? '-';
             })
             ->addIndexColumn()
-            // ->addColumn('action', function ($row) {
-            //     $showUrl = route('sertifikat-pegawai.show', $row->id);
-            //     $editUrl = route('sertifikat-pegawai.edit', $row->id);
-            //     $deleteUrl = route('sertifikat-pegawai.destroy', $row->id);
-            //     return '
-            //         <a href="' . $showUrl . '" class="btn btn-sm btn-info">Show</a>
-            //         <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
-            //         <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-            //             ' . csrf_field() . method_field('DELETE') . '
-            //             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus data?\')">Hapus</button>
-            //         </form>
-            //     ';
-            // })
-            ->rawColumns(['action'])
+            ->editColumn('tgl_terbit', function ($row) {
+                return $row->tgl_terbit ? \Carbon\Carbon::parse($row->tgl_terbit)->translatedFormat('j F Y') : '-';
+            })
+            ->editColumn('tgl_kadaluarsa', function ($row) {
+                return $row->tgl_kadaluarsa ? \Carbon\Carbon::parse($row->tgl_kadaluarsa)->translatedFormat('j F Y') : '-';
+            })
+            ->addColumn('file', function ($row) {
+                if ($row->document && $row->document->path) {
+                    $ext = pathinfo($row->document->path, PATHINFO_EXTENSION);
+                    $url = asset('storage/' . $row->document->path);
+
+                    if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
+                        return '<a href="' . $url . '" target="_blank"><img src="' . $url . '" alt="file" width="60" style="cursor: pointer;" title="Lihat File"></a>';
+                    } else {
+                        return '<a href="' . $url . '" target="_blank">Lihat File</a>';
+                    }
+                }
+                return '<span class="text-muted">-</span>';
+            })
+            ->rawColumns(['file', 'action'])
             ->make(true);
     }
 
@@ -50,13 +58,34 @@ class SertifikatPegawaiController extends Controller
     {
         $request->validate([
             'pegawai_id' => 'required|exists:pegawais,id',
-            'jenis_sertifikat' => 'required|string',
-            'nomor' => 'required|string',
+            'jenis_sertifikat' => 'required|string|max:255',
+            'nomor' => 'required|string|max:255',
             'tgl_terbit' => 'required|date',
             'tgl_kadaluarsa' => 'required|date',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
         ]);
 
-        SertifikatPegawai::create($request->all());
+        $sertifikat = new SertifikatPegawai();
+        $sertifikat->pegawai_id = $request->pegawai_id;
+        $sertifikat->jenis_sertifikat = $request->jenis_sertifikat;
+        $sertifikat->nomor = $request->nomor;
+        $sertifikat->tgl_terbit = $request->tgl_terbit;
+        $sertifikat->tgl_kadaluarsa = $request->tgl_kadaluarsa;
+        $sertifikat->save();
+
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('sertifikat_files', 'public');
+
+            $document = new DocumentPegawai();
+            $document->path = $path;
+            $document->nama_file = 'Sertifikat - ' . $sertifikat->jenis_sertifikat;
+            $document->jenis_dokumen = 'sertifikat';
+            $document->pegawai_id = $sertifikat->pegawai_id;
+            $document->save();
+
+            $sertifikat->document_id = $document->id;
+            $sertifikat->save();
+        }
 
         return redirect()->route('sertifikat-pegawai.index')->with('success', 'Data sertifikat berhasil ditambahkan');
     }
@@ -78,14 +107,40 @@ class SertifikatPegawaiController extends Controller
     {
         $request->validate([
             'pegawai_id' => 'required|exists:pegawais,id',
-            'jenis_sertifikat' => 'required|string',
-            'nomor' => 'required|string',
+            'jenis_sertifikat' => 'required|string|max:255',
+            'nomor' => 'required|string|max:255',
             'tgl_terbit' => 'required|date',
             'tgl_kadaluarsa' => 'required|date',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
         ]);
 
         $sertifikat = SertifikatPegawai::findOrFail($id);
-        $sertifikat->update($request->all());
+        $sertifikat->pegawai_id = $request->pegawai_id;
+        $sertifikat->jenis_sertifikat = $request->jenis_sertifikat;
+        $sertifikat->nomor = $request->nomor;
+        $sertifikat->tgl_terbit = $request->tgl_terbit;
+        $sertifikat->tgl_kadaluarsa = $request->tgl_kadaluarsa;
+        $sertifikat->save();
+
+        if ($request->hasFile('file')) {
+            // Hapus file lama jika ada
+            if ($sertifikat->document && $sertifikat->document->path) {
+                Storage::disk('public')->delete($sertifikat->document->path);
+                $sertifikat->document->delete();
+            }
+
+            $path = $request->file('file')->store('sertifikat_files', 'public');
+
+            $document = new DocumentPegawai();
+            $document->path = $path;
+            $document->nama_file = 'Sertifikat - ' . $sertifikat->jenis_sertifikat;
+            $document->jenis_dokumen = 'sertifikat';
+            $document->pegawai_id = $sertifikat->pegawai_id;
+            $document->save();
+
+            $sertifikat->document_id = $document->id;
+            $sertifikat->save();
+        }
 
         return redirect()->route('sertifikat-pegawai.index')->with('success', 'Data sertifikat berhasil diperbarui');
     }

@@ -30,6 +30,7 @@
                                     <th>Nomor</th>
                                     <th>Tanggal Terbit</th>
                                     <th>Tanggal Kadaluarsa</th>
+                                    <th>File</th>
                                     <!-- <th>Aksi</th> -->
                                 </tr>
                             </thead>
@@ -77,6 +78,12 @@
                 {
                     data: 'tgl_kadaluarsa',
                     name: 'tgl_kadaluarsa'
+                },
+                {
+                    data: 'file',
+                    name: 'file',
+                    orderable: false,
+                    searchable: false
                 },
                 // {
                 //     data: 'action',

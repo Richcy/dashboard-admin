@@ -27,7 +27,7 @@
                     </ul>
                 </div>
                 @endif
-                <form action="{{ route('sertifikat-pegawai.update', $sertifikat->id) }}" method="POST">
+                <form action="{{ route('sertifikat-pegawai.update', $sertifikat->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -89,6 +89,16 @@
                                 id="tgl_kadaluarsa" name="tgl_kadaluarsa"
                                 value="{{ old('tgl_kadaluarsa', $sertifikat->tgl_kadaluarsa ? \Carbon\Carbon::parse($sertifikat->tgl_kadaluarsa)->format('Y-m-d') : '') }}">
                             @error('tgl_kadaluarsa')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Upload File Sertifikat -->
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload File Sertifikat</label>
+                            <input type="file" class="form-control @error('file') is-invalid @enderror"
+                                id="file" name="file" accept=".pdf,.jpg,.jpeg,.png,.webp">
+                            @error('file')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

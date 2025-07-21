@@ -273,6 +273,7 @@
                                                 <th>Nomor</th>
                                                 <th>Tanggal Terbit</th>
                                                 <th>Tanggal Kadaluarsa</th>
+                                                <th>File</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -283,8 +284,24 @@
                                                 <td>{{ $pegawai->nama_dengan_gelar }}</td>
                                                 <td>{{ $p->jenis_sertifikat }}</td>
                                                 <td>{{ $p->nomor }}</td>
-                                                <td>{{ $p->tgl_terbit }}</td>
-                                                <td>{{ $p->tgl_kadaluarsa }}</td>
+                                                <td>{{ $p->tgl_terbit ? \Carbon\Carbon::parse($p->tgl_terbit)->translatedFormat('j F Y') : '-' }}</td>
+                                                <td>{{ $p->tgl_kadaluarsa ? \Carbon\Carbon::parse($p->tgl_kadaluarsa)->translatedFormat('j F Y') : '-' }}</td>
+                                                {{-- Kolom File --}}
+                                                <td>
+                                                    @if ($p->document && $p->document->path)
+                                                    @php
+                                                    $ext = pathinfo($p->document->path, PATHINFO_EXTENSION);
+                                                    @endphp
+
+                                                    @if(in_array($ext, ['jpg', 'jpeg', 'png', 'webp']))
+                                                    <img src="{{ asset('storage/' . $p->document->path) }}" alt="File Sertifikat" width="60">
+                                                    @else
+                                                    <a href="{{ asset('storage/' . $p->document->path) }}" target="_blank">Lihat File</a>
+                                                    @endif
+                                                    @else
+                                                    <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a href="{{ route('sertifikat-pegawai.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                                     <form action="{{ route('sertifikat-pegawai.destroy', $p->id) }}" method="POST" style="display:inline;">

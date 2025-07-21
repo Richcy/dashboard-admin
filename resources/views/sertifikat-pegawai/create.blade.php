@@ -18,7 +18,7 @@
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
-                <form action="{{ route('sertifikat-pegawai.store') }}" method="POST">
+                <form action="{{ route('sertifikat-pegawai.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-body">
@@ -76,10 +76,21 @@
                             @enderror
                         </div>
 
+                        <!-- Upload File Sertifikat -->
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload File Sertifikat</label>
+                            <input type="file" class="form-control @error('file') is-invalid @enderror"
+                                id="file" name="file" accept=".pdf,.jpg,.jpeg,.png,.webp">
+                            @error('file')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <div class="card-footer">
                             <a href="{{ route('sertifikat-pegawai.index') }}" class="btn btn-secondary">Back</a>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
+                    </div>
                 </form>
 
 

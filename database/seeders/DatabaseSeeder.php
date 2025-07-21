@@ -67,32 +67,32 @@ class DatabaseSeeder extends Seeder
                     ]);
             }
 
-            foreach ($pegawais as $pegawai) {
-                // Buat 1–2 dokumen sertifikat
-                $jumlahDokumen = rand(1, 2);
+            // foreach ($pegawais as $pegawai) {
+            //     // Buat 1–2 dokumen sertifikat
+            //     $jumlahDokumen = rand(1, 2);
 
-                for ($i = 0; $i < $jumlahDokumen; $i++) {
-                    $jenisSertifikat = fake()->randomElement(['STR', 'SIP']);
+            //     for ($i = 0; $i < $jumlahDokumen; $i++) {
+            //         $jenisSertifikat = fake()->randomElement(['STR', 'SIP']);
 
-                    // Simulasi dokumen yang di-upload
-                    $document = DocumentPegawai::create([
-                        'pegawai_id' => $pegawai->id,
-                        'jenis_dokumen' => 'sertifikat', // atau bisa pakai $jenisSertifikat
-                        'nama_file' => $jenisSertifikat . '_' . fake()->uuid() . '.pdf',
-                        'path' => 'uploads/sertifikat/' . fake()->uuid() . '.pdf',
-                    ]);
+            //         // Simulasi dokumen yang di-upload
+            //         $document = DocumentPegawai::create([
+            //             'pegawai_id' => $pegawai->id,
+            //             'jenis_dokumen' => 'sertifikat', // atau bisa pakai $jenisSertifikat
+            //             'nama_file' => $jenisSertifikat . '_' . fake()->uuid() . '.pdf',
+            //             'path' => 'uploads/sertifikat/' . fake()->uuid() . '.pdf',
+            //         ]);
 
-                    // Simulasi entri sertifikat
-                    SertifikatPegawai::create([
-                        'pegawai_id' => $pegawai->id,
-                        'document_id' => $document->id,
-                        'jenis_sertifikat' => $jenisSertifikat,
-                        'nomor' => fake()->regexify('[A-Z]{2}[0-9]{6}'),
-                        'tgl_terbit' => now()->subYears(rand(1, 3)),
-                        'tgl_kadaluarsa' => now()->addYears(rand(1, 3)),
-                    ]);
-                }
-            }
+            //         // Simulasi entri sertifikat
+            //         SertifikatPegawai::create([
+            //             'pegawai_id' => $pegawai->id,
+            //             'document_id' => $document->id,
+            //             'jenis_sertifikat' => $jenisSertifikat,
+            //             'nomor' => fake()->regexify('[A-Z]{2}[0-9]{6}'),
+            //             'tgl_terbit' => now()->subYears(rand(1, 3)),
+            //             'tgl_kadaluarsa' => now()->addYears(rand(1, 3)),
+            //         ]);
+            //     }
+            // }
         });
     }
 }
