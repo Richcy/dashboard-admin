@@ -18,6 +18,11 @@ class SertifikatPegawai extends Model
         'tgl_kadaluarsa',
     ];
 
+    protected $casts = [
+        'tanggal_terbit' => 'date',
+        'tanggal_kadaluarsa' => 'date',
+    ];
+
     public function pegawai()
     {
         return $this->belongsTo(Pegawai::class);

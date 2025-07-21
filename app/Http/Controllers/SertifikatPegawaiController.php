@@ -50,11 +50,10 @@ class SertifikatPegawaiController extends Controller
     {
         $request->validate([
             'pegawai_id' => 'required|exists:pegawais,id',
-            'sertifikat' => 'required|string',
-            'nama_sekolah' => 'required|string',
-            'jurusan' => 'required|string',
-            'nomor_ijazah' => 'required|string',
-            'tahun_lulus' => 'required|digits:4|integer',
+            'jenis_sertifikat' => 'required|string',
+            'nomor' => 'required|string',
+            'tgl_terbit' => 'required|date',
+            'tgl_kadaluarsa' => 'required|date',
         ]);
 
         SertifikatPegawai::create($request->all());
@@ -79,11 +78,10 @@ class SertifikatPegawaiController extends Controller
     {
         $request->validate([
             'pegawai_id' => 'required|exists:pegawais,id',
-            'sertifikat' => 'required|string',
-            'nama_sekolah' => 'required|string',
-            'jurusan' => 'required|string',
-            'nomor_ijazah' => 'required|string',
-            'tahun_lulus' => 'required|digits:4|integer',
+            'jenis_sertifikat' => 'required|string',
+            'nomor' => 'required|string',
+            'tgl_terbit' => 'required|date',
+            'tgl_kadaluarsa' => 'required|date',
         ]);
 
         $sertifikat = SertifikatPegawai::findOrFail($id);

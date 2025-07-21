@@ -38,63 +38,48 @@
 
                         <!-- Sertifikat -->
                         <div class="mb-3">
-                            <label for="sertifikat" class="form-label">Tingkat Sertifikat</label>
-                            <select class="form-control @error('sertifikat') is-invalid @enderror" id="sertifikat" name="sertifikat">
+                            <label for="jenis_sertifikat" class="form-label">Jenis Sertifikat</label>
+                            <select class="form-control @error('jenis_sertifikat') is-invalid @enderror" id="jenis_sertifikat" name="jenis_sertifikat">
                                 <option value="">-- Pilih Sertifikat --</option>
-                                <option value="SD" {{ old('sertifikat') == 'SD' ? 'selected' : '' }}>SD</option>
-                                <option value="SMP" {{ old('sertifikat') == 'SMP' ? 'selected' : '' }}>SMP</option>
-                                <option value="SMA/SMK" {{ old('sertifikat') == 'SMA/SMK' ? 'selected' : '' }}>SMA/SMK</option>
-                                <option value="D3" {{ old('sertifikat') == 'D3' ? 'selected' : '' }}>D3</option>
-                                <option value="S1" {{ old('sertifikat') == 'S1' ? 'selected' : '' }}>S1</option>
-                                <option value="S2" {{ old('sertifikat') == 'S2' ? 'selected' : '' }}>S2</option>
-                                <option value="S3" {{ old('sertifikat') == 'S3' ? 'selected' : '' }}>S3</option>
+                                <option value="STR" {{ old('jenis_sertifikat') == 'STR' ? 'selected' : '' }}>STR</option>
+                                <option value="SIP" {{ old('jenis_sertifikat') == 'SIP' ? 'selected' : '' }}>SIP</option>
                             </select>
-                            @error('sertifikat')
+                            @error('jenis_sertifikat')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Nama Sekolah -->
+                        <!-- Nomor -->
                         <div class="mb-3">
-                            <label for="nama_sekolah" class="form-label">Nama Sekolah</label>
-                            <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror" id="nama_sekolah" name="nama_sekolah" value="{{ old('nama_sekolah') }}">
-                            @error('nama_sekolah')
+                            <label for="nomor" class="form-label">Nomor</label>
+                            <input type="text" class="form-control @error('nomor') is-invalid @enderror" id="nomor" name="nomor" value="{{ old('nomor') }}">
+                            @error('nomor')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Jurusan -->
+                        <!-- Tanggal Terbit -->
                         <div class="mb-3">
-                            <label for="jurusan" class="form-label">Jurusan</label>
-                            <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan" value="{{ old('jurusan') }}">
-                            @error('jurusan')
+                            <label for="tgl_terbit" class="form-label">Tanggal Terbit</label>
+                            <input type="date" class="form-control @error('tgl_terbit') is-invalid @enderror" id="tgl_terbit" name="tgl_terbit" value="{{ old('tgl_terbit') }}">
+                            @error('tgl_terbit')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Nomor Ijazah -->
+                        <!-- Tanggal Kadaluarsa -->
                         <div class="mb-3">
-                            <label for="nomor_ijazah" class="form-label">Nomor Ijazah</label>
-                            <input type="text" class="form-control @error('nomor_ijazah') is-invalid @enderror" id="nomor_ijazah" name="nomor_ijazah" value="{{ old('nomor_ijazah') }}">
-                            @error('nomor_ijazah')
+                            <label for="tgl_kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
+                            <input type="date" class="form-control @error('tgl_kadaluarsa') is-invalid @enderror" id="tgl_kadaluarsa" name="tgl_kadaluarsa" value="{{ old('tgl_kadaluarsa') }}">
+                            @error('tgl_kadaluarsa')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Tahun Lulus -->
-                        <div class="mb-3">
-                            <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
-                            <input type="number" class="form-control @error('tahun_lulus') is-invalid @enderror" id="tahun_lulus" name="tahun_lulus" value="{{ old('tahun_lulus') }}" min="1900" max="{{ date('Y') }}">
-                            @error('tahun_lulus')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="card-footer">
+                            <a href="{{ route('sertifikat-pegawai.index') }}" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <a href="{{ route('sertifikat-pegawai.index') }}" class="btn btn-secondary">Back</a>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
                 </form>
 
 

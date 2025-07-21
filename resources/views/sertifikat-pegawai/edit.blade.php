@@ -18,6 +18,15 @@
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <form action="{{ route('sertifikat-pegawai.update', $sertifikat->id) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -32,6 +41,8 @@
                                 <option value="{{ $p->id }}" {{ old('pegawai_id', $sertifikat->pegawai_id) == $p->id ? 'selected' : '' }}>{{ $p->nama_dengan_gelar }}</option>
                                 @endforeach
                             </select>
+                            <!-- Hidden input agar tetap dikirim ke server -->
+                            <input type="hidden" name="pegawai_id" value="{{ old('pegawai_id', $sertifikat->pegawai_id) }}">
                             @error('pegawai_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -39,50 +50,45 @@
 
                         <!-- Sertifikat -->
                         <div class="mb-3">
-                            <label for="sertifikat" class="form-label">Tingkat Sertifikat</label>
-                            <select class="form-control @error('sertifikat') is-invalid @enderror" id="sertifikat" name="sertifikat">
+                            <label for="jenis_sertifikat" class="form-label">Jenis Sertifikat</label>
+                            <select class="form-control @error('jenis_sertifikat') is-invalid @enderror" id="jenis_sertifikat" name="jenis_sertifikat">
                                 <option value="">-- Pilih Sertifikat --</option>
-                                @foreach(['SD', 'SMP', 'SMA/SMK', 'D3', 'S1', 'S2', 'S3'] as $tingkat)
-                                <option value="{{ $tingkat }}" {{ old('sertifikat', $sertifikat->sertifikat) == $tingkat ? 'selected' : '' }}>{{ $tingkat }}</option>
+                                @foreach(['STR', 'SIP'] as $jenis)
+                                <option value="{{ $jenis }}" {{ old('jenis_sertifikat', $sertifikat->jenis_sertifikat ?? '') == $jenis ? 'selected' : '' }}>{{ $jenis }}</option>
                                 @endforeach
                             </select>
-                            @error('sertifikat')
+                            @error('jenis_sertifikat')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Nama Sekolah -->
+                        <!-- Nomor -->
                         <div class="mb-3">
-                            <label for="nama_sekolah" class="form-label">Nama Sekolah</label>
-                            <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror" id="nama_sekolah" name="nama_sekolah" value="{{ old('nama_sekolah', $sertifikat->nama_sekolah) }}">
-                            @error('nama_sekolah')
+                            <label for="nomor" class="form-label">Nomor</label>
+                            <input type="text" class="form-control @error('nomor') is-invalid @enderror" id="nomor" name="nomor" value="{{ old('nomor', $sertifikat->nomor) }}">
+                            @error('nomor')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Jurusan -->
+                        <!-- Tanggal Terbit -->
                         <div class="mb-3">
-                            <label for="jurusan" class="form-label">Jurusan</label>
-                            <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan" value="{{ old('jurusan', $sertifikat->jurusan) }}">
-                            @error('jurusan')
+                            <label for="tgl_terbit" class="form-label">Tanggal Terbit</label>
+                            <input type="date" class="form-control @error('tgl_terbit') is-invalid @enderror"
+                                id="tgl_terbit" name="tgl_terbit"
+                                value="{{ old('tgl_terbit', $sertifikat->tgl_terbit ? \Carbon\Carbon::parse($sertifikat->tgl_terbit)->format('Y-m-d') : '') }}">
+                            @error('tgl_terbit')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Nomor Ijazah -->
+                        <!-- Tanggal Kadaluarsa -->
                         <div class="mb-3">
-                            <label for="nomor_ijazah" class="form-label">Nomor Ijazah</label>
-                            <input type="text" class="form-control @error('nomor_ijazah') is-invalid @enderror" id="nomor_ijazah" name="nomor_ijazah" value="{{ old('nomor_ijazah', $sertifikat->nomor_ijazah) }}">
-                            @error('nomor_ijazah')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Tahun Lulus -->
-                        <div class="mb-3">
-                            <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
-                            <input type="number" class="form-control @error('tahun_lulus') is-invalid @enderror" id="tahun_lulus" name="tahun_lulus" value="{{ old('tahun_lulus', $sertifikat->tahun_lulus) }}" min="1900" max="{{ date('Y') }}">
-                            @error('tahun_lulus')
+                            <label for="tgl_kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
+                            <input type="date" class="form-control @error('tgl_kadaluarsa') is-invalid @enderror"
+                                id="tgl_kadaluarsa" name="tgl_kadaluarsa"
+                                value="{{ old('tgl_kadaluarsa', $sertifikat->tgl_kadaluarsa ? \Carbon\Carbon::parse($sertifikat->tgl_kadaluarsa)->format('Y-m-d') : '') }}">
+                            @error('tgl_kadaluarsa')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -93,9 +99,6 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
-
-
-
                 <!-- /.card-footer -->
             </div>
             <!-- /.card -->
